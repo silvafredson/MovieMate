@@ -14,6 +14,7 @@ final class HomeTabContoller: UITabBarController {
         setupTabs()
         self.tabBar.tintColor = .black
         self.tabBar.unselectedItemTintColor = .gray
+        //self.tabBar.backgroundColor = .darkGray
     }
     
     // MARK: - Setup Tabs
@@ -34,3 +35,21 @@ final class HomeTabContoller: UITabBarController {
         return nav
     }
 }
+
+//extension UINavigationController {
+//    override open func viewDidLoad() {
+//        super.viewDidLoad()
+//        
+//        let appearance = UINavigationBarAppearance()
+//        appearance.configureWithOpaqueBackground()
+//        appearance.backgroundColor = UIColor(.red)
+//        appearance.titleTextAttributes = [
+//            .foregroundColor: UIColor(.black),
+//            .font: UIFont.systemFont(ofSize: 30, weight: .semibold)
+//        ]
+//        appearance.shadowColor = .red
+//        
+//        UINavigationBar.appearance().standardAppearance = appearance
+//        //UINavigationBar.appearance().scrollEdgeAppearance = appearance
+//    }
+//}
