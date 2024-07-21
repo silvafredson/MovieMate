@@ -17,8 +17,8 @@ class PopularCollectionViewCell: UICollectionViewCell {
         image.contentMode = .scaleAspectFill
         image.image = UIImage(named: "Aragorn")
         image.clipsToBounds = true
-        image.layer.cornerRadius = 8
-        image.layer.masksToBounds = true
+        image.layer.cornerRadius = Size.tiny
+        image.layer.masksToBounds = true // Verificar se é nescessário
         return image
     }()
     
@@ -26,7 +26,6 @@ class PopularCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         contentView.addSubview(coverImageView)
         setupConstraints()
-        
     }
     
     required init?(coder: NSCoder) {
@@ -39,7 +38,7 @@ class PopularCollectionViewCell: UICollectionViewCell {
     
     private func setupConstraints() {
         coverImageView.snp.makeConstraints {
-            $0.top.trailing.bottom.leading.equalToSuperview()
+            $0.edges.equalToSuperview()
         }
     }
 }

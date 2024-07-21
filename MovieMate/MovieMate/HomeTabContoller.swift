@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 final class HomeTabContoller: UITabBarController {
     
@@ -52,4 +53,30 @@ final class HomeTabContoller: UITabBarController {
 //        UINavigationBar.appearance().standardAppearance = appearance
 //        //UINavigationBar.appearance().scrollEdgeAppearance = appearance
 //    }
+//}
+
+// MARK: - SwiftUI Preview
+
+//struct MyUIViewControllerRepresentable: UIViewControllerRepresentable {
+//    func makeUIViewController(context: Context) -> UIViewController {
+//        // Substitua isso pelo seu próprio código para criar e configurar sua UIViewController
+//        let viewController = HomeTabContoller()
+//        return viewController
+//    }
+//    
+//    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
+//}
+//
+//struct ContentView: View {
+//    var body: some View {
+//        VStack {
+//            MyUIViewControllerRepresentable()
+//                .edgesIgnoringSafeArea(.all)
+//        }
+//    }
+//}
+//
+//// Visualização de visualização prévia
+//#Preview {
+//    ContentView()
 //}
