@@ -6,11 +6,13 @@
 //
 
 import UIKit
+import SnapKit
 
 class FavoritesViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .white
-    }
+    
+    private lazy var favoriteTableView: UITableView = {
+        let tableView = UITableView()
+        return tableView
+    }()
 }
+

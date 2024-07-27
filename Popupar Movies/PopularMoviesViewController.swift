@@ -16,7 +16,7 @@ class PopularMoviesViewController: UIViewController {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.itemSize = .init(width: view.frame.size.width * 0.42, height: view.frame.size.height * 0.22)
-        layout.sectionInset = UIEdgeInsets(top: .zero, left: 8, bottom: .zero, right: 8)
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
         //layout.itemSize = CGSize(width: 180, height: 220)
         //layout.minimumLineSpacing = 10
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
