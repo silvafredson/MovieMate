@@ -17,8 +17,9 @@ class PopularCollectionViewCell: UICollectionViewCell {
         image.contentMode = .scaleAspectFill
         image.image = UIImage(named: "Aragorn")
         image.clipsToBounds = true
-        image.layer.cornerRadius = Size.tiny
+        image.layer.cornerRadius = Utils.Size.tiny
         image.layer.masksToBounds = true // Verificar se é nescessário
+        image.isUserInteractionEnabled = true
         return image
     }()
     

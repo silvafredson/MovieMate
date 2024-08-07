@@ -13,9 +13,7 @@ final class HomeTabContoller: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTabs()
-        self.tabBar.tintColor = .black
-        self.tabBar.unselectedItemTintColor = .gray
-        //self.tabBar.backgroundColor = .darkGray
+        customizeTabBar()
     }
     
     // MARK: - Setup Tabs
@@ -34,6 +32,12 @@ final class HomeTabContoller: UITabBarController {
         nav.tabBarItem.image = image
         nav.viewControllers.first?.navigationItem.title = title
         return nav
+    }
+    
+    private func customizeTabBar() {
+        self.tabBar.tintColor = .black
+        self.tabBar.unselectedItemTintColor = .gray
+        //self.tabBar.backgroundColor = .darkGray
     }
 }
 
