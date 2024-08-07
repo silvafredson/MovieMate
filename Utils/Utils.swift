@@ -6,10 +6,16 @@
 //
 
 import Foundation
+import UIKit
+import SwiftUI
 
 
 struct Utils {
     typealias Size = Padding
+    
+    struct SavedColors {
+        static let titleDaptiveColor = Color("titleDaptiveColor")
+    }
     
     enum Padding {
         static let micro: CGFloat = 2.0

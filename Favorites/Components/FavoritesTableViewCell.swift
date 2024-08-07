@@ -17,7 +17,7 @@ final class FavoritesTableViewCell: UITableViewCell {
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = UIColor(Utils.SavedColors.titleDaptiveColor)
         label.numberOfLines = 3
         label.font = .systemFont(ofSize: 18, weight: .bold)
         return label
@@ -26,14 +26,14 @@ final class FavoritesTableViewCell: UITableViewCell {
     private lazy var genrelabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14, weight: .medium)
-        label.textColor = .black
+        label.textColor = UIColor(Utils.SavedColors.titleDaptiveColor)
         return label
     }()
     
     private let releaseDateLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14, weight: .light)
-        label.textColor = .black
+        label.textColor = UIColor(Utils.SavedColors.titleDaptiveColor)
         return label
     }()
 
@@ -118,7 +118,7 @@ struct FavoritesCellContentView: View {
         VStack {
             FavoritesTableViewCellRepresentable()
                 .frame(width: .infinity, height: 140)
-                //.border(Color.red)
+                .border(Color.red)
         }
     }
 }

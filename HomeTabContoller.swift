@@ -18,16 +18,13 @@ final class HomeTabContoller: UITabBarController {
     
     // MARK: - Setup Tabs
     private func setupTabs() {
-        
         let home = self.createNav(with: "Home", and: UIImage(systemName: "house"), vc: PopularMoviesViewController())
         let favorites = self.createNav(with: "Favorites", and: UIImage(systemName: "star"), vc: FavoritesViewController())
-        
         self.setViewControllers([home, favorites], animated: true)
     }
     
     private func createNav(with title: String, and image: UIImage?, vc: UIViewController) -> UINavigationController {
         let nav = UINavigationController(rootViewController: vc)
-        
         nav.tabBarItem.title = title
         nav.tabBarItem.image = image
         nav.viewControllers.first?.navigationItem.title = title
@@ -35,29 +32,30 @@ final class HomeTabContoller: UITabBarController {
     }
     
     private func customizeTabBar() {
-        self.tabBar.tintColor = .black
+        self.tabBar.tintColor = UIColor(Utils.SavedColors.titleDaptiveColor)
         self.tabBar.unselectedItemTintColor = .gray
         //self.tabBar.backgroundColor = .darkGray
     }
 }
 
-//extension UINavigationController {
-//    override open func viewDidLoad() {
-//        super.viewDidLoad()
-//        
-//        let appearance = UINavigationBarAppearance()
-//        appearance.configureWithOpaqueBackground()
-//        appearance.backgroundColor = UIColor(.red)
-//        appearance.titleTextAttributes = [
-//            .foregroundColor: UIColor(.black),
-//            .font: UIFont.systemFont(ofSize: 30, weight: .semibold)
-//        ]
-//        appearance.shadowColor = .red
-//        
-//        UINavigationBar.appearance().standardAppearance = appearance
-//        //UINavigationBar.appearance().scrollEdgeAppearance = appearance
-//    }
-//}
+// TODO: - Resolver o probblema do espaçamento na navigation (visivel apenas no simulador)
+extension UINavigationController {
+    override open func viewDidLoad() {
+        super.viewDidLoad()
+        
+        let appearance = UINavigationBarAppearance()
+        //appearance.configureWithOpaqueBackground()
+        //appearance.backgroundColor = UIColor(Utils.SavedColors.titleDaptiveColor)
+        appearance.titleTextAttributes = [
+            .foregroundColor: UIColor(Utils.SavedColors.titleDaptiveColor),
+            .font: UIFont.systemFont(ofSize: 20, weight: .semibold)
+        ]
+        //appearance.shadowColor = .yellow
+        
+        UINavigationBar.appearance().standardAppearance = appearance
+        //UINavigationBar.appearance().scrollEdgeAppearance = appearance
+    }
+}
 
 // MARK: - SwiftUI Preview
 
