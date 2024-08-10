@@ -17,7 +17,7 @@ final class FavoritesTableViewCell: UITableViewCell {
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor(Utils.SavedColors.titleDaptiveColor)
+        label.textColor = UIColor(Utils.SavedColors.titleAdaptiveColor)
         label.numberOfLines = 3
         label.font = .systemFont(ofSize: 18, weight: .bold)
         return label
@@ -26,14 +26,14 @@ final class FavoritesTableViewCell: UITableViewCell {
     private lazy var genrelabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14, weight: .medium)
-        label.textColor = UIColor(Utils.SavedColors.titleDaptiveColor)
+        label.textColor = UIColor(Utils.SavedColors.titleAdaptiveColor)
         return label
     }()
     
     private let releaseDateLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14, weight: .light)
-        label.textColor = UIColor(Utils.SavedColors.titleDaptiveColor)
+        label.textColor = UIColor(Utils.SavedColors.titleAdaptiveColor)
         return label
     }()
 

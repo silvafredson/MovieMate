@@ -41,6 +41,8 @@ final class FavoritesViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
+        tableView.allowsSelection = false
+        tableView.isUserInteractionEnabled = true
         tableView.register(FavoritesTableViewCell.self, forCellReuseIdentifier: FavoritesTableViewCell.identifier)
         return tableView
     }()
@@ -92,6 +94,8 @@ final class FavoritesViewController: UIViewController {
         favoriteTableView.reloadData()
     }
 }
+
+// MARK: - Extensions
 
 extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
