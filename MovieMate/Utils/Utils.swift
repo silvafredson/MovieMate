@@ -5,16 +5,13 @@
 //  Created by Fredson Silva on 21/07/24.
 //
 
-import Foundation
 import UIKit
-import SwiftUI
-
 
 struct Utils {
     typealias Size = Padding
     
     struct SavedColors {
-        static let titleDaptiveColor = Color("titleDaptiveColor")
+        static let titleAdaptiveColor = UIColor(named: "titleAdaptiveColor")
     }
     
     enum Padding {

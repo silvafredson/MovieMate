@@ -11,13 +11,15 @@ import SwiftUI
 
 final class FavoritesTableViewCell: UITableViewCell {
     
+    var movies: PopularMovies?
+    
     private let moviesPosterImage = UIImageView()
     private let separatorView = UIView()
     static let identifier = "FavoritesTableViewCell"
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor(Utils.SavedColors.titleAdaptiveColor)
+        label.textColor = Utils.SavedColors.titleAdaptiveColor
         label.numberOfLines = 3
         label.font = .systemFont(ofSize: 18, weight: .bold)
         return label
@@ -26,14 +28,14 @@ final class FavoritesTableViewCell: UITableViewCell {
     private lazy var genrelabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14, weight: .medium)
-        label.textColor = UIColor(Utils.SavedColors.titleAdaptiveColor)
+        label.textColor = Utils.SavedColors.titleAdaptiveColor
         return label
     }()
     
     private let releaseDateLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14, weight: .light)
-        label.textColor = UIColor(Utils.SavedColors.titleAdaptiveColor)
+        label.textColor = Utils.SavedColors.titleAdaptiveColor
         return label
     }()
 
@@ -48,8 +50,8 @@ final class FavoritesTableViewCell: UITableViewCell {
     
     func configure(with movie: PopularMovies) {
         moviesPosterImage.image = UIImage(named: movie.posterPath)
-        titleLabel.text = movie.originalTitle
-        genrelabel.text = movie.genre
+        titleLabel.text = movies?.originalTitle
+        //genrelabel.text = movies?.genreIds
         releaseDateLabel.text = movie.releaseDate
     }
     

@@ -32,7 +32,7 @@ final class HomeTabContoller: UITabBarController {
     }
     
     private func customizeTabBar() {
-        self.tabBar.tintColor = UIColor(Utils.SavedColors.titleDaptiveColor)
+        self.tabBar.tintColor = Utils.SavedColors.titleAdaptiveColor
         self.tabBar.unselectedItemTintColor = .gray
         //self.tabBar.backgroundColor = .darkGray
     }
@@ -45,9 +45,9 @@ extension UINavigationController {
         
         let appearance = UINavigationBarAppearance()
         //appearance.configureWithOpaqueBackground()
-        //appearance.backgroundColor = UIColor(Utils.SavedColors.titleDaptiveColor)
+        //appearance.backgroundColor = UIColor(Utils.SavedColors.titleAdaptiveColor)
         appearance.titleTextAttributes = [
-            .foregroundColor: UIColor(Utils.SavedColors.titleDaptiveColor),
+            .foregroundColor: Utils.SavedColors.titleAdaptiveColor ?? "",
             .font: UIFont.systemFont(ofSize: 20, weight: .semibold)
         ]
         //appearance.shadowColor = .yellow

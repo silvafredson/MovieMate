@@ -16,11 +16,11 @@ final class FavoritesViewController: UIViewController {
         let view = UIView()
         let emoji = UILabel()
         emoji.text = "😅"
-        emoji.font = .systemFont(ofSize: 120)
+        emoji.font = .systemFont(ofSize: 80)
         let label = UILabel()
         label.text = "You do not have any favorites yet!"
-        label.font = .systemFont(ofSize: 18, weight: .regular)
-        label.textColor = .black
+        label.font = .systemFont(ofSize: Utils.Size.medium, weight: .regular)
+        label.textColor = Utils.SavedColors.titleAdaptiveColor
         label.textAlignment = .center
         view.addSubview(emoji)
         view.addSubview(label)
@@ -61,10 +61,10 @@ final class FavoritesViewController: UIViewController {
         
         // MARK: - Place holder
         favorites = [
-            PopularMovies(originalTitle: "Inception", releaseDate: "2010", genre: "Sci-Fi", posterPath: "Inception"),
-            PopularMovies(originalTitle: "The Dark Knight", releaseDate: "2008", genre: "Action", posterPath: "The Dark Knight"),
-            PopularMovies(originalTitle: "Interstellar", releaseDate: "2014", genre: "Sci-Fi", posterPath: "Interstellar"),
-            PopularMovies(originalTitle: "Dunkirk", releaseDate: "2017", genre: "War", posterPath: "Dunkirk")
+//            PopularMovies(originalTitle: "Inception", releaseDate: "2010", genre: "Sci-Fi", posterPath: "Inception"),
+//            PopularMovies(originalTitle: "The Dark Knight", releaseDate: "2008", genre: "Action", posterPath: "The Dark Knight"),
+//            PopularMovies(originalTitle: "Interstellar", releaseDate: "2014", genre: "Sci-Fi", posterPath: "Interstellar"),
+//            PopularMovies(originalTitle: "Dunkirk", releaseDate: "2017", genre: "War", posterPath: "Dunkirk")
         ]
     }
     
@@ -113,27 +113,27 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 // MARK: - SwiftUI Preview
-
-struct FavoritesUIViewControllerRepresentable: UIViewControllerRepresentable {
-    func makeUIViewController(context: Context) -> UIViewController {
-        // Substitua isso pelo seu próprio código para criar e configurar sua UIViewController
-        let viewController = FavoritesViewController()
-        return viewController
-    }
-
-    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
-}
-
-struct FavoritesContentView: View {
-    var body: some View {
-        VStack {
-            FavoritesUIViewControllerRepresentable()
-                .edgesIgnoringSafeArea(.all)
-        }
-    }
-}
-
-// Visualização de visualização prévia
-#Preview {
-    FavoritesContentView()
-}
+//
+//struct FavoritesUIViewControllerRepresentable: UIViewControllerRepresentable {
+//    func makeUIViewController(context: Context) -> UIViewController {
+//        // Substitua isso pelo seu próprio código para criar e configurar sua UIViewController
+//        let viewController = FavoritesViewController()
+//        return viewController
+//    }
+//
+//    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
+//}
+//
+//struct FavoritesContentView: View {
+//    var body: some View {
+//        VStack {
+//            FavoritesUIViewControllerRepresentable()
+//                .edgesIgnoringSafeArea(.all)
+//        }
+//    }
+//}
+//
+//// Visualização de visualização prévia
+//#Preview {
+//    FavoritesContentView()
+//}

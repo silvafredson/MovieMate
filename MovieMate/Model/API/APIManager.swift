@@ -30,7 +30,7 @@ final class API: APIManager {
                     guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
                         throw MoviesError.invalidResponse
                     }
-                    
+                    // Decodificação dos Dados
                     let decoder = JSONDecoder()
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
                     

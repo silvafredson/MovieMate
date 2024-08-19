@@ -7,10 +7,13 @@
 
 import UIKit
 import SnapKit
-//import Kingfisher
+import Kingfisher
 
 class PopularCollectionViewCell: UICollectionViewCell {
     static let indentifier = "PopularCollectionViewCell"
+    
+//    private var viewModel = PopularMoviesViewModel()
+//    let couverURL = URL(string: "https://image.tmdb.org/t/p/w500/hu40Uxp9WtpL34jv3zyWLb5zEVY.jpg")
     
     private lazy var coverImageView: UIImageView = {
         let image = UIImageView()
@@ -33,8 +36,17 @@ class PopularCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with image: UIImage) {
-        coverImageView.image = image
+    func configure(with movie: PopularMovies?) {
+        guard let movie = movie else {
+            coverImageView.image = nil
+            return
+        }
+        
+        if let imageURL = movie.posterPathURL {
+            coverImageView.kf.setImage(with: imageURL)
+        } else {
+            coverImageView.image = nil
+        }
     }
     
     private func setupConstraints() {

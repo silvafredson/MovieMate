@@ -8,10 +8,12 @@
 import UIKit
 import SnapKit
 import SwiftUI
+import Combine
 
 class PopularMoviesViewController: UIViewController {
     
-    private var actorsImages: [UIImage] = []
+    private var viewModel = PopularMoviesViewModel()
+    private var cancellables = Set<AnyCancellable>()
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -26,6 +28,7 @@ class PopularMoviesViewController: UIViewController {
         collectionView.contentInset = UIEdgeInsets(top: .zero, left: 8, bottom: .zero, right: 8)
         collectionView.dataSource = self
         collectionView.delegate = self
+        //collectionView.safeAreaInsets
         collectionView.register(PopularCollectionViewCell.self, forCellWithReuseIdentifier: PopularCollectionViewCell.indentifier)
         collectionView.isUserInteractionEnabled = true
         return collectionView
@@ -35,17 +38,17 @@ class PopularMoviesViewController: UIViewController {
         super.viewDidLoad()
         view.addSubview(collectionView)
         setupConstraints() 
-        setupActorsImages()
+        setupBindings()
+        viewModel.loadingPopularMovies()
     }
     
-    
-    //MARK: - place holder
-    private func setupActorsImages() {
-        for _ in 0...25 {
-            actorsImages.append(UIImage(named: "The Dark Knight")!)
-            actorsImages.append(UIImage(named: "Interstellar")!)
-            actorsImages.append(UIImage(named: "Inception")!)
-        }
+    private func setupBindings() {
+        viewModel.$movies
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.collectionView.reloadData()
+            }
+            .store(in: &cancellables)
     }
     
     private func setupConstraints() {
@@ -57,17 +60,33 @@ class PopularMoviesViewController: UIViewController {
 
 extension PopularMoviesViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.actorsImages.count
+        return viewModel.movies.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PopularCollectionViewCell.indentifier, for: indexPath) as? PopularCollectionViewCell else {
             return UICollectionViewCell()
         }
-        let actorsImages = self.actorsImages[indexPath.row]
-        cell.configure(with: actorsImages)
+        let movie = viewModel.movies[indexPath.row]
+        print("Configuring cell with movie: \(movie.originalTitle)")
+        cell.configure(with: movie)
         return cell
     }
+    
+    
+//    func moviesForIndexPath(indexPath: NSIndexPath) -> PopularMovies {
+//        return viewModel.movies[indexPath.row]
+//        }
+//        
+//        
+//        func reversePhotoArray(photoArray:[String], startIndex:Int, endIndex:Int){
+//            if startIndex >= endIndex{
+//                return
+//            }
+//            swap(&photosUrlArray[startIndex], &photosUrlArray[endIndex])
+//            
+//            reversePhotoArray(photosUrlArray, startIndex: startIndex + 1, endIndex: endIndex - 1)
+//        }
 }
 
 extension PopularMoviesViewController: UICollectionViewDelegateFlowLayout {
@@ -86,10 +105,6 @@ extension PopularMoviesViewController: UICollectionViewDelegateFlowLayout {
         print("Movie \(indexPath.row) tepped")
     }
     
-//    // Horizontal Spacing
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-//        return 14
-//    }
 }
 
 // MARK: - SwiftUI Preview
