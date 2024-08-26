@@ -10,19 +10,22 @@ import SnapKit
 import Kingfisher
 
 class PopularCollectionViewCell: UICollectionViewCell {
-    static let indentifier = "PopularCollectionViewCell"
     
-//    private var viewModel = PopularMoviesViewModel()
-//    let couverURL = URL(string: "https://image.tmdb.org/t/p/w500/hu40Uxp9WtpL34jv3zyWLb5zEVY.jpg")
+    static let identifier = "PopularCollectionViewCell"
     
+    var onImageTap: (() -> Void)?
+
     private lazy var coverImageView: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFill
-        image.image = UIImage(named: "Aragorn")
         image.clipsToBounds = true
         image.layer.cornerRadius = 6
-        image.layer.masksToBounds = true // Verificar se é nescessário
+        image.layer.masksToBounds = true 
         image.isUserInteractionEnabled = true
+        
+        // TODO: - Verificar se realmente precisa diss já que a navegação está fuincionando sem ele
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleImageTap))
+//        image.addGestureRecognizer(tapGesture)
         return image
     }()
     
@@ -53,5 +56,9 @@ class PopularCollectionViewCell: UICollectionViewCell {
         coverImageView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+    }
+    
+    @objc private func handleImageTap() {
+        onImageTap?()
     }
 }

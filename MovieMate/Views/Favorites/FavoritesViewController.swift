@@ -58,14 +58,6 @@ final class FavoritesViewController: UIViewController {
         setupHierarchy()
         setupConstraints()
         updateView() // Atualiza a tela de favoritos
-        
-        // MARK: - Place holder
-        favorites = [
-//            PopularMovies(originalTitle: "Inception", releaseDate: "2010", genre: "Sci-Fi", posterPath: "Inception"),
-//            PopularMovies(originalTitle: "The Dark Knight", releaseDate: "2008", genre: "Action", posterPath: "The Dark Knight"),
-//            PopularMovies(originalTitle: "Interstellar", releaseDate: "2014", genre: "Sci-Fi", posterPath: "Interstellar"),
-//            PopularMovies(originalTitle: "Dunkirk", releaseDate: "2017", genre: "War", posterPath: "Dunkirk")
-        ]
     }
     
     private func setupHierarchy() {

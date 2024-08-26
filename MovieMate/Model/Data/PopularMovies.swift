@@ -12,6 +12,7 @@ struct PopularMovies: Codable, Identifiable {
     let releaseDate: String
     let genreIds: [Int]
     let overview: String
+    let backdropPath: String
     let posterPath: String
     let id: Int
     var posterPathURL: URL? {

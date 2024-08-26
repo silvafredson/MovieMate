@@ -29,7 +29,7 @@ class PopularMoviesViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         //collectionView.safeAreaInsets
-        collectionView.register(PopularCollectionViewCell.self, forCellWithReuseIdentifier: PopularCollectionViewCell.indentifier)
+        collectionView.register(PopularCollectionViewCell.self, forCellWithReuseIdentifier: PopularCollectionViewCell.identifier)
         collectionView.isUserInteractionEnabled = true
         return collectionView
     }()
@@ -51,11 +51,21 @@ class PopularMoviesViewController: UIViewController {
             .store(in: &cancellables)
     }
     
+    // TODO: - Resolver o problema da safe area
     private func setupConstraints() {
         collectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
     }
+    
+    private func navigateToMovieDetail(movie: PopularMovies) {
+        print("Navigating to movie detail for: \(movie.originalTitle)") // Adicione este print
+        let viewController = MovieDetailViewController()
+        viewController.movie = movie
+        navigationController?.pushViewController(viewController, animated: true)
+
+    }
+
 }
 
 extension PopularMoviesViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -63,13 +73,27 @@ extension PopularMoviesViewController: UICollectionViewDelegate, UICollectionVie
         return viewModel.movies.count
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let selectedMovie = viewModel.movies[indexPath.row]
+        print("Selected movie: \(selectedMovie.originalTitle)")
+        navigateToMovieDetail(movie: selectedMovie)
+
+        print("Movie \(indexPath.row) tepped")
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PopularCollectionViewCell.indentifier, for: indexPath) as? PopularCollectionViewCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PopularCollectionViewCell.identifier, for: indexPath) as? PopularCollectionViewCell else {
             return UICollectionViewCell()
         }
         let movie = viewModel.movies[indexPath.row]
         print("Configuring cell with movie: \(movie.originalTitle)")
         cell.configure(with: movie)
+        
+        // Ação de toque na imagem
+        cell.onImageTap = { [weak self] in
+            self?.navigateToMovieDetail(movie: movie)
+        }
         return cell
     }
     
@@ -100,10 +124,7 @@ extension PopularMoviesViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 8
     }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("Movie \(indexPath.row) tepped")
-    }
+
     
 }
 
@@ -123,7 +144,7 @@ struct PopularMoviesView: View {
     var body: some View {
         VStack {
             PopularMoviesViewControllerRepresentable()
-                .edgesIgnoringSafeArea(.all)
+                //.edgesIgnoringSafeArea(.all)
         }
     }
 }
