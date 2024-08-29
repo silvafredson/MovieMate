@@ -62,7 +62,8 @@ extension MovieDetailViewController: UITableViewDelegate, UITableViewDataSource 
         }
         
         let movie = viewModel.movies[indexPath.row]
-        cell.configure(with: movie)
+        cell.configureMoviePoster(with: movie)
+        cell.configure(movie: movie, index: indexPath)
         return cell
     }
 }

@@ -32,7 +32,7 @@ final class API: APIManager {
                     }
                     // Decodificação dos Dados
                     let decoder = JSONDecoder()
-                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                    //decoder.keyDecodingStrategy = .convertFromSnakeCase
                     
                     let model = try decoder.decode(T.self, from: data!)
                     completion(.success(model))
