@@ -70,12 +70,11 @@ extension PopularMoviesViewController: UICollectionViewDelegate, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        let selectedMovie = viewModel.movies[indexPath.row]
-        print("Selected movie: \(selectedMovie.originalTitle)")
-        navigateToMovieDetail(movie: selectedMovie)
 
-        print("Movie \(indexPath.row) tepped")
+        let selectedMovie = viewModel.movies[indexPath.row]
+        let detailVC = MovieDetailViewController()
+        detailVC.movie = selectedMovie // Passa o filme selecionado para a tela de detalhes
+        navigationController?.pushViewController(detailVC, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
