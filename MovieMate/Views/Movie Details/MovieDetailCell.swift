@@ -17,7 +17,6 @@ protocol FavoritesMovieEventDelegate: AnyObject {
 class MovieDetailCell: UITableViewCell {
     
     weak var delegate : FavoritesMovieEventDelegate?
-    
     var viewModel: PopularMoviesViewModel?
     
     static let identifier = "MovieDetailCell"
@@ -92,7 +91,7 @@ class MovieDetailCell: UITableViewCell {
     
     func configure(movie: PopularMovies, index: IndexPath) {
         print("Overview from API: \(movie.overview)")
-        backgroundImageBannerView.image = UIImage(named: movie.backdropPath) // Verificar
+        backgroundImageBannerView.image = UIImage(named: movie.posterPath) // Verificar
         titleLabel.text = movie.originalTitle
         overviewLabel.text = movie.overview
         releaseDateLabel.text = movie.releaseDate
@@ -143,7 +142,7 @@ class MovieDetailCell: UITableViewCell {
         }
         
         overviewLabel.snp.makeConstraints {
-            $0.leading.trailing.bottom.equalToSuperview().inset(Utils.Padding.small)
+            $0.leading.trailing.bottom.equalToSuperview().inset(Utils.Padding.medium)
         }
     }
     
@@ -165,7 +164,7 @@ struct MovieDetailCellView: View {
     var body: some View {
         VStack {
             MovieDetailCellRepresentable()
-                //.frame(height: 60)
+                //.frame(height: 160)
                 .border(Color.red)
         }
     }
