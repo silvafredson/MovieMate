@@ -57,8 +57,6 @@ extension MovieDetailViewController: UITableViewDelegate, UITableViewDataSource 
     }
 }
 
-
-
 // MARK: - Preview SwiftUI
 
 struct DetailUIViewControllerRepresentable: UIViewControllerRepresentable {

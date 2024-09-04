@@ -58,7 +58,6 @@ class MovieDetailCell: UITableViewCell {
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.textAlignment = .justified
-        //label.text = "Managing an exclusive list is similar. Deselect the row and display a checkmark or an accessory view to indicate the selected state. But unlike an inclusive list, limit the exclusive list to only one selected item at a time.For instance, the backpacker’s app may let users filter the list of hiking trails based on a single difficulty level: easy, moderate, and hard. With this kind of exclusive list, the app must remove the checkmark from the previous selection, and display a checkmark for the current selection. The app must also remember which item is the currently selected item. For example:"
         return label
     }()
         
@@ -132,10 +131,10 @@ class MovieDetailCell: UITableViewCell {
     }
     
     private func setupView() {
+        contentView.addSubview(overviewLabel)
         contentView.addSubview(backgroundImageBannerView)
         contentView.addSubview(titleLabel)
         contentView.addSubview(favoriteButton)
-        contentView.addSubview(overviewLabel)
         
         backgroundImageBannerView.snp.makeConstraints {
             $0.edges.equalToSuperview()
