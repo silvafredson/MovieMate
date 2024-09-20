@@ -27,7 +27,6 @@ class PopularCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.addSubview(coverImageView)
         setupConstraints()
     }
     
@@ -49,12 +48,14 @@ class PopularCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupConstraints() {
+        contentView.addSubview(coverImageView)
+        
         coverImageView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
     }
     
-    @objc private func handleImageTap() {
-        onImageTap?()
-    }
+//    @objc private func handleImageTap() {
+//        onImageTap?()
+//    }
 }

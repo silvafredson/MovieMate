@@ -116,13 +116,29 @@ class MovieDetailCell: UITableViewCell {
             return
         }
         
-        if let imageURL = movie.posterPathURL {
-            print("Image URL: \(imageURL)")
-            backgroundImageBannerView.kf.setImage(with: imageURL)
-        } else {
-            print("No image URL available")
-            //backgroundImageBannerView.image = UIImage(named: "Interstellar")
-            backgroundImageBannerView.image = nil
+//        if let imageURL = movie.posterPathURL {
+//            print("Image URL: \(imageURL)")
+//            backgroundImageBannerView.kf.setImage(with: imageURL)
+//        } else {
+//            print("No image URL available")
+//            //backgroundImageBannerView.image = UIImage(named: "Interstellar")
+//            backgroundImageBannerView.image = nil
+//        }
+        
+        if let imageURL = movie.posterPathURL { // Substitua pela URL correta
+            backgroundImageBannerView.kf.setImage(
+                with: imageURL,
+                placeholder: UIImage(named: "placeholder"), // Imagem de placeholder enquanto carrega
+                options: [.transition(.fade(0.2))], // Animação de fade ao carregar
+                completionHandler: { result in
+                    switch result {
+                    case .success:
+                        print("Imagem carregada com sucesso.")
+                    case .failure(let error):
+                        print("Erro ao carregar imagem: \(error)")
+                    }
+                }
+            )
         }
     }
     
@@ -131,17 +147,36 @@ class MovieDetailCell: UITableViewCell {
     }
     
     private func setupView() {
-        contentView.addSubview(overviewLabel)
         contentView.addSubview(backgroundImageBannerView)
         contentView.addSubview(titleLabel)
+        contentView.addSubview(overviewLabel)
         contentView.addSubview(favoriteButton)
         
+        // Define o backgroundImageBannerView para ocupar 60% da altura
         backgroundImageBannerView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.top.leading.trailing.equalToSuperview()
+            //$0.height.equalToSuperview().multipliedBy(0.7)
+            $0.height.equalTo(backgroundImageBannerView.snp.width).multipliedBy(1.2)
         }
         
+        // Define o titleLabel abaixo da imagem
+        titleLabel.snp.makeConstraints {
+            $0.top.equalTo(backgroundImageBannerView.snp.bottom).offset(8)
+            $0.leading.trailing.equalToSuperview().inset(16)
+        }
+        
+        // Define o overviewLabel abaixo do titleLabel
         overviewLabel.snp.makeConstraints {
-            $0.leading.trailing.bottom.equalToSuperview().inset(Utils.Padding.medium)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(8)
+            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.bottom.equalToSuperview().inset(16) // Ajusta para alinhar o texto na parte de baixo
+        }
+        
+        // Configuração opcional para o favoriteButton, se quiser que ele apareça junto ao título ou overview
+        favoriteButton.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.top)
+            $0.trailing.equalToSuperview().inset(16)
+            $0.width.height.equalTo(24) // Define o tamanho do botão
         }
     }
     

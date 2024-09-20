@@ -29,6 +29,19 @@ class MovieDetailViewController: UIViewController {
         view.addSubview(detailTableView)
         setupConstraints()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNavigationBar()
+    }
+    
+    private func setupNavigationBar() {
+        // Configura a barra de navegação como transparente
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.backgroundColor = .clear // Adiciona um fundo claro
+    }
   
     private func setupConstraints() {
         detailTableView.snp.makeConstraints {
