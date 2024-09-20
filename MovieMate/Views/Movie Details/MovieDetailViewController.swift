@@ -7,13 +7,10 @@
 
 import UIKit
 import SwiftUI
-import Combine
 import SnapKit
 
 class MovieDetailViewController: UIViewController {
     
-    private var viewModel = PopularMoviesViewModel()
-    private var cancellables = Set<AnyCancellable>()
     var movie: PopularMovies?
 
     private lazy var detailTableView: UITableView = {
@@ -31,18 +28,21 @@ class MovieDetailViewController: UIViewController {
         super.viewDidLoad()
         view.addSubview(detailTableView)
         setupConstraints()
-        setupBindings()
     }
     
-    private func setupBindings() {
-        viewModel.$movies
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.detailTableView.reloadData()
-            }
-            .store(in: &cancellables)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNavigationBar()
     }
     
+    private func setupNavigationBar() {
+        // Configura a barra de navegação como transparente
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.backgroundColor = .clear // Adiciona um fundo claro
+    }
+  
     private func setupConstraints() {
         detailTableView.snp.makeConstraints {
             $0.edges.equalToSuperview()
@@ -53,7 +53,7 @@ class MovieDetailViewController: UIViewController {
 
 extension MovieDetailViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.movies.count
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -61,13 +61,14 @@ extension MovieDetailViewController: UITableViewDelegate, UITableViewDataSource 
             return UITableViewCell()
         }
         
-        let movie = viewModel.movies[indexPath.row]
-        cell.configure(with: movie)
+        // Configura a célula com o filme selecionado
+        if let selectedMovie = movie {
+            cell.configureMoviePoster(with: selectedMovie)
+            cell.configure(movie: selectedMovie, index: indexPath)
+        }
         return cell
     }
 }
-
-
 
 // MARK: - Preview SwiftUI
 

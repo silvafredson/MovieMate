@@ -22,16 +22,11 @@ class PopularCollectionViewCell: UICollectionViewCell {
         image.layer.cornerRadius = 6
         image.layer.masksToBounds = true 
         image.isUserInteractionEnabled = true
-        
-        // TODO: - Verificar se realmente precisa diss já que a navegação está fuincionando sem ele
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleImageTap))
-//        image.addGestureRecognizer(tapGesture)
         return image
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.addSubview(coverImageView)
         setupConstraints()
     }
     
@@ -53,12 +48,14 @@ class PopularCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupConstraints() {
+        contentView.addSubview(coverImageView)
+        
         coverImageView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
     }
     
-    @objc private func handleImageTap() {
-        onImageTap?()
-    }
+//    @objc private func handleImageTap() {
+//        onImageTap?()
+//    }
 }

@@ -27,6 +27,8 @@
 		65B634132C4D4CC80035CA99 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B634122C4D4CC80035CA99 /* Utils.swift */; };
 		65D1FE5E2C781B7200A1EAFD /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D1FE5D2C781B7200A1EAFD /* MovieDetailViewController.swift */; };
 		65D1FE602C7835AA00A1EAFD /* MovieDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D1FE5F2C7835AA00A1EAFD /* MovieDetailCell.swift */; };
+		65DB384D2C8FCBF000566BD8 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 65DB384C2C8FCBF000566BD8 /* SnapKit */; };
+		65DB384F2C8FCBF000566BD8 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 65DB384E2C8FCBF000566BD8 /* SnapKit-Dynamic */; };
 		65FB5EB32C5AAFA200D86D80 /* PopularMovies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FB5EB22C5AAFA200D86D80 /* PopularMovies.swift */; };
 /* End PBXBuildFile section */
 
@@ -58,7 +60,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65DB384F2C8FCBF000566BD8 /* SnapKit-Dynamic in Frameworks */,
 				657FAF562C4358A600E24F53 /* Kingfisher in Frameworks */,
+				65DB384D2C8FCBF000566BD8 /* SnapKit in Frameworks */,
 				657FAF512C43534300E24F53 /* SnapKit in Frameworks */,
 				657FAF532C43534300E24F53 /* SnapKit-Dynamic in Frameworks */,
 			);
@@ -249,6 +253,8 @@
 				657FAF502C43534300E24F53 /* SnapKit */,
 				657FAF522C43534300E24F53 /* SnapKit-Dynamic */,
 				657FAF552C4358A600E24F53 /* Kingfisher */,
+				65DB384C2C8FCBF000566BD8 /* SnapKit */,
+				65DB384E2C8FCBF000566BD8 /* SnapKit-Dynamic */,
 			);
 			productName = MovieMate;
 			productReference = 6548E6F72C42E4AF00B4A83A /* MovieMate.app */;
@@ -572,6 +578,14 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 657FAF542C4358A600E24F53 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		65DB384C2C8FCBF000566BD8 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SnapKit;
+		};
+		65DB384E2C8FCBF000566BD8 /* SnapKit-Dynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "SnapKit-Dynamic";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

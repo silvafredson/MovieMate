@@ -39,23 +39,23 @@ final class HomeTabContoller: UITabBarController {
 }
 
 // TODO: - Resolver o probblema do espaçamento na navigation (visivel apenas no simulador)
-extension UINavigationController {
-    override open func viewDidLoad() {
-        super.viewDidLoad()
-        
-        let appearance = UINavigationBarAppearance()
-        //appearance.configureWithOpaqueBackground()
-        //appearance.backgroundColor = UIColor(Utils.SavedColors.titleAdaptiveColor)
-        appearance.titleTextAttributes = [
-            .foregroundColor: Utils.SavedColors.titleAdaptiveColor ?? "",
-            .font: UIFont.systemFont(ofSize: 20, weight: .semibold)
-        ]
-        //appearance.shadowColor = .yellow
-        
-        UINavigationBar.appearance().standardAppearance = appearance
-        //UINavigationBar.appearance().scrollEdgeAppearance = appearance
-    }
-}
+//extension UINavigationController {
+//    override open func viewDidLoad() {
+//        super.viewDidLoad()
+//        
+//        let appearance = UINavigationBarAppearance()
+//        //appearance.configureWithOpaqueBackground()
+//        //appearance.backgroundColor = UIColor(Utils.SavedColors.titleAdaptiveColor)
+//        appearance.titleTextAttributes = [
+//            .foregroundColor: Utils.SavedColors.titleAdaptiveColor ?? "",
+//            .font: UIFont.systemFont(ofSize: 20, weight: .semibold)
+//        ]
+//        //appearance.shadowColor = .yellow
+//        
+//        UINavigationBar.appearance().standardAppearance = appearance
+//        //UINavigationBar.appearance().scrollEdgeAppearance = appearance
+//    }
+//}
 
 // MARK: - SwiftUI Preview
 

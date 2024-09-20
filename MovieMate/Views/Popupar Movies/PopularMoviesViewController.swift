@@ -18,10 +18,6 @@ class PopularMoviesViewController: UIViewController {
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        //layout.itemSize = .init(width: view.frame.size.width * 0.42, height: view.frame.size.height * 0.22)
-        //layout.sectionInset = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
-        //layout.itemSize = CGSize(width: 180, height: 220)
-        //layout.minimumLineSpacing = 10
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .systemBackground
         collectionView.showsVerticalScrollIndicator = false
@@ -74,12 +70,11 @@ extension PopularMoviesViewController: UICollectionViewDelegate, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        let selectedMovie = viewModel.movies[indexPath.row]
-        print("Selected movie: \(selectedMovie.originalTitle)")
-        navigateToMovieDetail(movie: selectedMovie)
 
-        print("Movie \(indexPath.row) tepped")
+        let selectedMovie = viewModel.movies[indexPath.row]
+        let detailVC = MovieDetailViewController()
+        detailVC.movie = selectedMovie // Passa o filme selecionado para a tela de detalhes
+        navigationController?.pushViewController(detailVC, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
