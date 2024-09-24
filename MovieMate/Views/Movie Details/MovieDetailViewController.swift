@@ -26,13 +26,13 @@ class MovieDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(detailTableView)
-        setupConstraints()
+        setupView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigationBar()
+        detailTableView.reloadData()
     }
     
     private func setupNavigationBar() {
@@ -43,7 +43,8 @@ class MovieDetailViewController: UIViewController {
         navigationController?.navigationBar.backgroundColor = .clear // Adiciona um fundo claro
     }
   
-    private func setupConstraints() {
+    private func setupView() {
+        view.addSubview(detailTableView)
         detailTableView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
@@ -53,7 +54,7 @@ class MovieDetailViewController: UIViewController {
 
 extension MovieDetailViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return Sections.detail.rawValue
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -63,10 +64,17 @@ extension MovieDetailViewController: UITableViewDelegate, UITableViewDataSource 
         
         // Configura a célula com o filme selecionado
         if let selectedMovie = movie {
+            print("Configurando célula para o filme: \(selectedMovie.originalTitle)")
             cell.configureMoviePoster(with: selectedMovie)
             cell.configure(movie: selectedMovie, index: indexPath)
         }
         return cell
+    }
+}
+
+extension MovieDetailViewController {
+    enum Sections: Int, CaseIterable {
+        case detail = 1
     }
 }
 

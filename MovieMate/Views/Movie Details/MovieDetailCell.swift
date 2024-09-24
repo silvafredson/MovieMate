@@ -76,7 +76,7 @@ class MovieDetailCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupView()
+        setupViews()
     }
     
     required init?(coder: NSCoder) {
@@ -110,22 +110,11 @@ class MovieDetailCell: UITableViewCell {
     // TODO: - A imagem de fundo não está sendo exibida
     func configureMoviePoster(with movie: PopularMovies?) {
         
-        guard let movie = movie else {
-            backgroundImageBannerView.image = nil
-            //backgroundImageBannerView.image = UIImage(named: "Interstellar") // Apagar depois
-            return
-        }
-        
-//        if let imageURL = movie.posterPathURL {
-//            print("Image URL: \(imageURL)")
-//            backgroundImageBannerView.kf.setImage(with: imageURL)
-//        } else {
-//            print("No image URL available")
-//            //backgroundImageBannerView.image = UIImage(named: "Interstellar")
-//            backgroundImageBannerView.image = nil
-//        }
-        
+        backgroundImageBannerView.image = nil
+        guard let movie = movie else { return }
+
         if let imageURL = movie.posterPathURL { // Substitua pela URL correta
+            print("URL da imagem \(imageURL)")
             backgroundImageBannerView.kf.setImage(
                 with: imageURL,
                 placeholder: UIImage(named: "placeholder"), // Imagem de placeholder enquanto carrega
@@ -139,6 +128,8 @@ class MovieDetailCell: UITableViewCell {
                     }
                 }
             )
+        } else {
+            print("URL da imagem é nil")
         }
     }
     
@@ -146,7 +137,7 @@ class MovieDetailCell: UITableViewCell {
         favoriteButtonState()
     }
     
-    private func setupView() {
+    private func setupViews() {
         contentView.addSubview(backgroundImageBannerView)
         contentView.addSubview(titleLabel)
         contentView.addSubview(overviewLabel)
