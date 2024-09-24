@@ -91,21 +91,6 @@ extension PopularMoviesViewController: UICollectionViewDelegate, UICollectionVie
         }
         return cell
     }
-    
-    
-//    func moviesForIndexPath(indexPath: NSIndexPath) -> PopularMovies {
-//        return viewModel.movies[indexPath.row]
-//        }
-//        
-//        
-//        func reversePhotoArray(photoArray:[String], startIndex:Int, endIndex:Int){
-//            if startIndex >= endIndex{
-//                return
-//            }
-//            swap(&photosUrlArray[startIndex], &photosUrlArray[endIndex])
-//            
-//            reversePhotoArray(photosUrlArray, startIndex: startIndex + 1, endIndex: endIndex - 1)
-//        }
 }
 
 extension PopularMoviesViewController: UICollectionViewDelegateFlowLayout {
@@ -121,6 +106,19 @@ extension PopularMoviesViewController: UICollectionViewDelegateFlowLayout {
     }
 
     
+}
+
+extension PopularMoviesViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let currentHeight = scrollView.contentSize.height
+        let height = scrollView.frame.size.height
+        
+        // Verifica se o usuário está a 100 pontos do final da lista
+        if offsetY > currentHeight - height {
+            viewModel.loadMorePopularMovies()
+        }
+    }
 }
 
 // MARK: - SwiftUI Preview
