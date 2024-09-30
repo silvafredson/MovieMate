@@ -63,6 +63,8 @@ class MovieDetailCell: UITableViewCell {
         
     private lazy var releaseDateLabel = {
         let label = UILabel()
+        label.numberOfLines = 1
+        label.font = .systemFont(ofSize: 12, weight: .light)
         return label
     }()
     
@@ -117,7 +119,7 @@ class MovieDetailCell: UITableViewCell {
             print("URL da imagem \(imageURL)")
             backgroundImageBannerView.kf.setImage(
                 with: imageURL,
-                placeholder: UIImage(named: "placeholder"), // Imagem de placeholder enquanto carrega
+                placeholder: UIImage(named: "photo.fill"), // Imagem de placeholder enquanto carrega
                 options: [.transition(.fade(0.2))], // Animação de fade ao carregar
                 completionHandler: { result in
                     switch result {
@@ -142,6 +144,7 @@ class MovieDetailCell: UITableViewCell {
         contentView.addSubview(titleLabel)
         contentView.addSubview(overviewLabel)
         contentView.addSubview(favoriteButton)
+        contentView.addSubview(releaseDateLabel)
         
         // Define o backgroundImageBannerView para ocupar 60% da altura
         backgroundImageBannerView.snp.makeConstraints {
@@ -152,13 +155,18 @@ class MovieDetailCell: UITableViewCell {
         
         // Define o titleLabel abaixo da imagem
         titleLabel.snp.makeConstraints {
-            $0.top.equalTo(backgroundImageBannerView.snp.bottom).offset(8)
+            $0.top.equalTo(backgroundImageBannerView.snp.bottom).offset(Utils.Padding.small)
             $0.leading.trailing.equalToSuperview().inset(16)
+        }
+        
+        releaseDateLabel.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(Utils.Padding.smaller)
+            $0.leading.equalTo(titleLabel.snp.leading)
         }
         
         // Define o overviewLabel abaixo do titleLabel
         overviewLabel.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(8)
+            $0.top.equalTo(releaseDateLabel.snp.bottom).offset(Utils.Padding.medium)
             $0.leading.trailing.equalToSuperview().inset(16)
             $0.bottom.equalToSuperview().inset(16) // Ajusta para alinhar o texto na parte de baixo
         }
