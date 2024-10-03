@@ -26,6 +26,7 @@
 		65B634132C4D4CC80035CA99 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B634122C4D4CC80035CA99 /* Utils.swift */; };
 		65D1FE5E2C781B7200A1EAFD /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D1FE5D2C781B7200A1EAFD /* MovieDetailViewController.swift */; };
 		65D1FE602C7835AA00A1EAFD /* MovieDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D1FE5F2C7835AA00A1EAFD /* MovieDetailCell.swift */; };
+		65D4BAC52CABF218009D71FE /* FavoritesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D4BAC42CABF218009D71FE /* FavoritesManager.swift */; };
 		65FB5EB32C5AAFA200D86D80 /* PopularMovies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FB5EB22C5AAFA200D86D80 /* PopularMovies.swift */; };
 /* End PBXBuildFile section */
 
@@ -62,6 +63,7 @@
 		65B634122C4D4CC80035CA99 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		65D1FE5D2C781B7200A1EAFD /* MovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
 		65D1FE5F2C7835AA00A1EAFD /* MovieDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailCell.swift; sourceTree = "<group>"; };
+		65D4BAC42CABF218009D71FE /* FavoritesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesManager.swift; sourceTree = "<group>"; };
 		65FB5EB22C5AAFA200D86D80 /* PopularMovies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularMovies.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -133,6 +135,7 @@
 				654599B82C67F5AE00DEA1C6 /* ViewModel */,
 				65065E2E2C67CEFA00789F92 /* Views */,
 				657FAF462C42F34900E24F53 /* HomeTabContoller.swift */,
+				65D4BAC42CABF218009D71FE /* FavoritesManager.swift */,
 			);
 			path = MovieMate;
 			sourceTree = "<group>";
@@ -325,6 +328,7 @@
 				65065E5F2C67D24100789F92 /* FavoritesTableViewCell.swift in Sources */,
 				659E87B42C67DE0B00286ABF /* EndpointManager.swift in Sources */,
 				65065E592C67D19B00789F92 /* FavoritesViewController.swift in Sources */,
+				65D4BAC52CABF218009D71FE /* FavoritesManager.swift in Sources */,
 				6548E6FD2C42E4AF00B4A83A /* SceneDelegate.swift in Sources */,
 				65FB5EB32C5AAFA200D86D80 /* PopularMovies.swift in Sources */,
 				657FAF472C42F34900E24F53 /* HomeTabContoller.swift in Sources */,

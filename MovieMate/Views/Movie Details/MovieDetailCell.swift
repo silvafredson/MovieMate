@@ -18,6 +18,7 @@ class MovieDetailCell: UITableViewCell {
     
     weak var delegate : FavoritesMovieEventDelegate?
     var viewModel: PopularMoviesViewModel?
+    var currentMovie: PopularMovies?
     
     static let identifier = "MovieDetailCell"
     private let star = UIImage(systemName: "star")
@@ -91,6 +92,7 @@ class MovieDetailCell: UITableViewCell {
     }
     
     func configure(movie: PopularMovies, index: IndexPath) {
+        currentMovie = movie
         print("Overview from API: \(movie.overview)")
         backgroundImageBannerView.image = UIImage(named: movie.posterPath) // Verificar
         titleLabel.text = movie.originalTitle
@@ -109,7 +111,23 @@ class MovieDetailCell: UITableViewCell {
         }
     }
     
-    // TODO: - A imagem de fundo não está sendo exibida
+    private func favoriteButtonPressed() {
+        favoriteButtonState()
+        
+        guard let movie = currentMovie else { return }
+        
+        if FavoritesManager.shared.isFavorite(movie) {
+            FavoritesManager.shared.removeMovieFromFavorites(movie)
+            favoriteButton.setImage(star, for: .normal)
+        } else {
+            FavoritesManager.shared.addMovieToFavorites(movie)
+            favoriteButton.setImage(starFill, for: .normal)
+        }
+        
+        delegate?.favoriteMovie(favorite: !FavoritesManager.shared.isFavorite(movie))
+    }
+    
+    // TODO: - A imagem de fundo não está sendo exibida corretamente
     func configureMoviePoster(with movie: PopularMovies?) {
         
         backgroundImageBannerView.image = nil
@@ -133,10 +151,6 @@ class MovieDetailCell: UITableViewCell {
         } else {
             print("URL da imagem é nil")
         }
-    }
-    
-    private func favoriteButtonPressed() {
-        favoriteButtonState()
     }
     
     private func setupViews() {

@@ -8,7 +8,7 @@
 import Foundation
 
 final class PopularMoviesViewModel: ObservableObject {
-    @Published var movies: [PopularMovies] = []
+    @Published var movie: [PopularMovies] = []
     let service = Service()
     private var currentPage = 1
     private var totalPages = 1
@@ -27,7 +27,7 @@ final class PopularMoviesViewModel: ObservableObject {
             switch result {
             case .success(let movies):
                 print("Movies loaded successfully: \(movies.count) movies")
-                self.movies.append(contentsOf: movies)
+                self.movie.append(contentsOf: movies)
                 self.currentPage += 1
             case .failure(let error):
                 print("Failed to load movies: \(error)")
@@ -45,7 +45,7 @@ final class PopularMoviesViewModel: ObservableObject {
             switch completion {
             case .success(let movies):
                 print("Movies loaded successfully: \(movies.count) movies")
-                self?.movies.append(contentsOf: movies) // Adiciona os novos filmes à lista existente
+                self?.movie.append(contentsOf: movies) // Adiciona os novos filmes à lista existente
                 self?.currentPage += 1
             case .failure(let error):
                 print("Failed to load movies: \(error)")
