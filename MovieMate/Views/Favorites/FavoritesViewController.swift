@@ -58,12 +58,11 @@ final class FavoritesViewController: UIViewController {
         view.backgroundColor = .systemBackground
         setupHierarchy()
         setupConstraints()
+        //updateView() // Atualiza a tela de favoritos
     }
     
+    // TODO: - Verificar se é aqui mesmo que esse o updateView() deve ser chamado
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        FavoritesManager.shared.loadFavorites()
-        favorites = FavoritesManager.shared.favoriteMovies
         updateView() // Atualiza a tela de favoritos
     }
     

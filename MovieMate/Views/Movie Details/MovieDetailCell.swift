@@ -98,12 +98,6 @@ class MovieDetailCell: UITableViewCell {
         titleLabel.text = movie.originalTitle
         overviewLabel.text = movie.overview
         releaseDateLabel.text = movie.releaseDate
-        // Verifica se o filme está nos favoritos e ajusta o ícone do botão
-        if FavoritesManager.shared.isFavorite(movie) {
-            favoriteButton.setImage(starFill, for: .normal)
-        } else {
-            favoriteButton.setImage(star, for: .normal)
-        }
     }
     
     // MARK: - Private functions
@@ -123,10 +117,10 @@ class MovieDetailCell: UITableViewCell {
         guard let movie = currentMovie else { return }
         
         if FavoritesManager.shared.isFavorite(movie) {
-            FavoritesManager.shared.toggleFavorite(for: movie)// remove dos favoritos
+            FavoritesManager.shared.removeMovieFromFavorites(movie)
             favoriteButton.setImage(star, for: .normal)
         } else {
-            FavoritesManager.shared.toggleFavorite(for: movie)
+            FavoritesManager.shared.addMovieToFavorites(movie)
             favoriteButton.setImage(starFill, for: .normal)
         }
         
