@@ -18,6 +18,7 @@ class MovieDetailCell: UITableViewCell {
     
     weak var delegate : FavoritesMovieEventDelegate?
     var viewModel: PopularMoviesViewModel?
+    var currentMovie: PopularMovies?
     
     static let identifier = "MovieDetailCell"
     private let star = UIImage(systemName: "star")
@@ -63,6 +64,8 @@ class MovieDetailCell: UITableViewCell {
         
     private lazy var releaseDateLabel = {
         let label = UILabel()
+        label.numberOfLines = 1
+        label.font = .systemFont(ofSize: 12, weight: .light)
         return label
     }()
     
@@ -89,11 +92,18 @@ class MovieDetailCell: UITableViewCell {
     }
     
     func configure(movie: PopularMovies, index: IndexPath) {
+        currentMovie = movie
         print("Overview from API: \(movie.overview)")
         backgroundImageBannerView.image = UIImage(named: movie.posterPath) // Verificar
         titleLabel.text = movie.originalTitle
         overviewLabel.text = movie.overview
         releaseDateLabel.text = movie.releaseDate
+        // Verifica se o filme está nos favoritos e ajusta o ícone do botão
+        if FavoritesManager.shared.isFavorite(movie) {
+            favoriteButton.setImage(starFill, for: .normal)
+        } else {
+            favoriteButton.setImage(star, for: .normal)
+        }
     }
     
     // MARK: - Private functions
@@ -107,7 +117,23 @@ class MovieDetailCell: UITableViewCell {
         }
     }
     
-    // TODO: - A imagem de fundo não está sendo exibida
+    private func favoriteButtonPressed() {
+        favoriteButtonState()
+        
+        guard let movie = currentMovie else { return }
+        
+        if FavoritesManager.shared.isFavorite(movie) {
+            FavoritesManager.shared.toggleFavorite(for: movie)// remove dos favoritos
+            favoriteButton.setImage(star, for: .normal)
+        } else {
+            FavoritesManager.shared.toggleFavorite(for: movie)
+            favoriteButton.setImage(starFill, for: .normal)
+        }
+        
+        delegate?.favoriteMovie(favorite: !FavoritesManager.shared.isFavorite(movie))
+    }
+    
+    // TODO: - A imagem de fundo não está sendo exibida corretamente
     func configureMoviePoster(with movie: PopularMovies?) {
         
         backgroundImageBannerView.image = nil
@@ -117,7 +143,7 @@ class MovieDetailCell: UITableViewCell {
             print("URL da imagem \(imageURL)")
             backgroundImageBannerView.kf.setImage(
                 with: imageURL,
-                placeholder: UIImage(named: "placeholder"), // Imagem de placeholder enquanto carrega
+                placeholder: UIImage(named: "photo.fill"), // Imagem de placeholder enquanto carrega
                 options: [.transition(.fade(0.2))], // Animação de fade ao carregar
                 completionHandler: { result in
                     switch result {
@@ -133,15 +159,12 @@ class MovieDetailCell: UITableViewCell {
         }
     }
     
-    private func favoriteButtonPressed() {
-        favoriteButtonState()
-    }
-    
     private func setupViews() {
         contentView.addSubview(backgroundImageBannerView)
         contentView.addSubview(titleLabel)
         contentView.addSubview(overviewLabel)
         contentView.addSubview(favoriteButton)
+        contentView.addSubview(releaseDateLabel)
         
         // Define o backgroundImageBannerView para ocupar 60% da altura
         backgroundImageBannerView.snp.makeConstraints {
@@ -152,13 +175,18 @@ class MovieDetailCell: UITableViewCell {
         
         // Define o titleLabel abaixo da imagem
         titleLabel.snp.makeConstraints {
-            $0.top.equalTo(backgroundImageBannerView.snp.bottom).offset(8)
+            $0.top.equalTo(backgroundImageBannerView.snp.bottom).offset(Utils.Padding.small)
             $0.leading.trailing.equalToSuperview().inset(16)
+        }
+        
+        releaseDateLabel.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(Utils.Padding.smaller)
+            $0.leading.equalTo(titleLabel.snp.leading)
         }
         
         // Define o overviewLabel abaixo do titleLabel
         overviewLabel.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(8)
+            $0.top.equalTo(releaseDateLabel.snp.bottom).offset(Utils.Padding.medium)
             $0.leading.trailing.equalToSuperview().inset(16)
             $0.bottom.equalToSuperview().inset(16) // Ajusta para alinhar o texto na parte de baixo
         }

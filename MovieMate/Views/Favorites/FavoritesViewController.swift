@@ -55,8 +55,15 @@ final class FavoritesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemBackground
         setupHierarchy()
         setupConstraints()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        FavoritesManager.shared.loadFavorites()
+        favorites = FavoritesManager.shared.favoriteMovies
         updateView() // Atualiza a tela de favoritos
     }
     
@@ -97,7 +104,7 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: FavoritesTableViewCell.identifier, for: indexPath) as? FavoritesTableViewCell else { return UITableViewCell()}
         
-        // Configura a célula com os dados dos favoritos
+        // Configura em cada célula os dados dos favoritos
         let movie = favorites[indexPath.row]
         cell.configure(with: movie)
         return cell
