@@ -35,11 +35,16 @@ class PopularMoviesViewController: UIViewController {
         view.addSubview(collectionView)
         setupConstraints() 
         setupBindings()
+//        viewModel.loadingPopularMovies()
+    }
+    
+    // TODO: - Vrificar se é necessário chamar o loadingPopularMovies() aqui ou no viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
         viewModel.loadingPopularMovies()
     }
     
     private func setupBindings() {
-        viewModel.$movies
+        viewModel.$movie
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.collectionView.reloadData()
@@ -66,12 +71,12 @@ class PopularMoviesViewController: UIViewController {
 
 extension PopularMoviesViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.movies.count
+        return viewModel.movie.count
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
-        let selectedMovie = viewModel.movies[indexPath.row]
+        let selectedMovie = viewModel.movie[indexPath.row]
         let detailVC = MovieDetailViewController()
         detailVC.movie = selectedMovie // Passa o filme selecionado para a tela de detalhes
         navigationController?.pushViewController(detailVC, animated: true)
@@ -81,7 +86,7 @@ extension PopularMoviesViewController: UICollectionViewDelegate, UICollectionVie
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PopularCollectionViewCell.identifier, for: indexPath) as? PopularCollectionViewCell else {
             return UICollectionViewCell()
         }
-        let movie = viewModel.movies[indexPath.row]
+        let movie = viewModel.movie[indexPath.row]
         print("Configuring cell with movie: \(movie.originalTitle)")
         cell.configure(with: movie)
         
@@ -91,21 +96,6 @@ extension PopularMoviesViewController: UICollectionViewDelegate, UICollectionVie
         }
         return cell
     }
-    
-    
-//    func moviesForIndexPath(indexPath: NSIndexPath) -> PopularMovies {
-//        return viewModel.movies[indexPath.row]
-//        }
-//        
-//        
-//        func reversePhotoArray(photoArray:[String], startIndex:Int, endIndex:Int){
-//            if startIndex >= endIndex{
-//                return
-//            }
-//            swap(&photosUrlArray[startIndex], &photosUrlArray[endIndex])
-//            
-//            reversePhotoArray(photosUrlArray, startIndex: startIndex + 1, endIndex: endIndex - 1)
-//        }
 }
 
 extension PopularMoviesViewController: UICollectionViewDelegateFlowLayout {
@@ -121,6 +111,19 @@ extension PopularMoviesViewController: UICollectionViewDelegateFlowLayout {
     }
 
     
+}
+
+extension PopularMoviesViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let currentHeight = scrollView.contentSize.height
+        let height = scrollView.frame.size.height
+        
+        // Verifica se o usuário está a 100 pontos do final da lista
+        if offsetY > currentHeight - height {
+            viewModel.loadMorePopularMovies()
+        }
+    }
 }
 
 // MARK: - SwiftUI Preview

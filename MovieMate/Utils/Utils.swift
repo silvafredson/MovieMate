@@ -17,7 +17,7 @@ struct Utils {
     enum Padding {
         static let micro: CGFloat = 2.0
         static let tiny: CGFloat = 4.0
-        static let smaller: CGFloat = 10.0
+        static let smaller: CGFloat = 8.0
         static let small: CGFloat = 12.0
         static let medium: CGFloat = 16.0
         static let big: CGFloat = 20.0

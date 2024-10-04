@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import SwiftUI
+import Kingfisher
 
 final class FavoritesTableViewCell: UITableViewCell {
     
@@ -49,14 +50,18 @@ final class FavoritesTableViewCell: UITableViewCell {
     }
     
     func configure(with movie: PopularMovies) {
-        moviesPosterImage.image = UIImage(named: movie.posterPath)
-        titleLabel.text = movies?.originalTitle
-        //genrelabel.text = movies?.genreIds
+        
+        if let posterURL = URL(string: "https://image.tmdb.org/t/p/w500\(movie.posterPath)") {
+            moviesPosterImage.kf.setImage(with: posterURL)
+        }
+        
+        //moviesPosterImage.image = UIImage(named: movie.posterPath)
+        titleLabel.text = movie.originalTitle
+        //genrelabel.text = movie.
         releaseDateLabel.text = movie.releaseDate
     }
     
     private func setupViews() {
-        //contentView.backgroundColor = .secondarySystemBackground
         separatorView.backgroundColor = .secondaryLabel
         moviesPosterImage.layer.cornerRadius = 4
         moviesPosterImage.layer.masksToBounds = true
@@ -109,6 +114,7 @@ final class FavoritesTableViewCell: UITableViewCell {
 struct FavoritesTableViewCellRepresentable: UIViewRepresentable {
     func makeUIView(context: Context) -> some UIView {
         let cell = FavoritesTableViewCell()
+        
         return cell
     }
 

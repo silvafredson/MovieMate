@@ -31,6 +31,8 @@ struct PopularMovies: Codable, Identifiable {
 }
 
 struct PopularMoviesResponse: Codable {
+    let page: Int
+    let totalPages: Int
     let results: [PopularMovies]
 }
 
