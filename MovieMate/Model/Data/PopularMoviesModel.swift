@@ -1,5 +1,5 @@
 //
-//  PopularMovies.swift
+//  PopularMoviesModel.swift
 //  MovieMate
 //
 //  Created by Fredson Silva on 31/07/24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PopularMovies: Codable, Identifiable {
+struct PopularMoviesModel: Codable, Identifiable {
     let backdropPath: String // TODO: Verificar se esse é o poster certo para imagem de fundo
     let genreIds: [Int]
     let id: Int
@@ -17,6 +17,12 @@ struct PopularMovies: Codable, Identifiable {
     let releaseDate: String
     var posterPathURL: URL? {
         URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)")
+    }
+    
+    var genreNames: [String] {
+        genreIds.compactMap { id in
+            GenreManager.shared.getGenreName(for: id)
+        }
     }
     
     enum Codingkeys: String, CodingKey {
@@ -33,6 +39,14 @@ struct PopularMovies: Codable, Identifiable {
 struct PopularMoviesResponse: Codable {
     let page: Int
     let totalPages: Int
-    let results: [PopularMovies]
+    let results: [PopularMoviesModel]
 }
 
+struct Genre: Codable {
+    let id: Int
+    let name: String
+}
+
+struct GenreResponse: Codable {
+    let genres: [Genre]
+}

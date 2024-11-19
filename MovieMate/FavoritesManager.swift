@@ -9,23 +9,23 @@ import Foundation
 
 //class FavoritesManager {
 //    static let shared = FavoritesManager()
-//    private var favoriteMovies: [PopularMovies] = []
+//    private var favoriteMovies: [PopularMoviesModel] = []
 //    
 //    private init() {}
 //
-//    func addMovieToFavorites(_ movie: PopularMovies) {
+//    func addMovieToFavorites(_ movie: PopularMoviesModel) {
 //        favoriteMovies.append(movie)
 //    }
 //    
-//    func removeMovieFromFavorites(_ movie: PopularMovies) {
+//    func removeMovieFromFavorites(_ movie: PopularMoviesModel) {
 //        favoriteMovies.removeAll { $0.id == movie.id }
 //    }
 //    
-//    func isFavorite(_ movie: PopularMovies) -> Bool {
+//    func isFavorite(_ movie: PopularMoviesModel) -> Bool {
 //        return favoriteMovies.contains(where: { $0.id == movie.id })
 //    }
 //    
-//    func getFavorites() -> [PopularMovies] {
+//    func getFavorites() -> [PopularMoviesModel] {
 //        return favoriteMovies
 //    }
 //}
@@ -34,9 +34,9 @@ final class FavoritesManager {
     static var shared = FavoritesManager()
     private init() {}
     
-    public private(set) var favoriteMovies: [PopularMovies] = []
+    public private(set) var favoriteMovies: [PopularMoviesModel] = []
     
-    func toggleFavorite(for movie: PopularMovies) {
+    func toggleFavorite(for movie: PopularMoviesModel) {
         if let index = favoriteMovies.firstIndex(where: { $0.id == movie.id }) {
             favoriteMovies.remove(at: index) // Remove dos favoritos
         } else {
@@ -45,7 +45,7 @@ final class FavoritesManager {
         saveFavorites()
     }
     
-    func isFavorite(_ movie: PopularMovies) -> Bool {
+    func isFavorite(_ movie: PopularMoviesModel) -> Bool {
         return favoriteMovies.contains(where: { $0.id == movie.id })
     }
 
@@ -59,7 +59,7 @@ final class FavoritesManager {
     func loadFavorites() {
         if let savedMovies = UserDefaults.standard.object(forKey: "favoriteMovies") as? Data {
             let decoder = JSONDecoder()
-            if let loadedMovies = try? decoder.decode([PopularMovies].self, from: savedMovies) {
+            if let loadedMovies = try? decoder.decode([PopularMoviesModel].self, from: savedMovies) {
                 favoriteMovies = loadedMovies
             }
         }

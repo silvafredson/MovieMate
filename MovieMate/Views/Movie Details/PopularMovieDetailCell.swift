@@ -1,5 +1,5 @@
 //
-//  MovieDetailCell.swift
+//  PopularMovieDetailCell.swift
 //  MovieMate
 //
 //  Created by Fredson Silva on 23/08/24.
@@ -14,11 +14,11 @@ protocol FavoritesMovieEventDelegate: AnyObject {
     func favoriteMovie(favorite: Bool)
 }
 
-class MovieDetailCell: UITableViewCell {
+class PopularMovieDetailCell: UITableViewCell {
     
     weak var delegate : FavoritesMovieEventDelegate?
     var viewModel: PopularMoviesViewModel?
-    var currentMovie: PopularMovies?
+    var currentMovie: PopularMoviesModel?
     
     static let identifier = "MovieDetailCell"
     private let star = UIImage(systemName: "star")
@@ -38,6 +38,16 @@ class MovieDetailCell: UITableViewCell {
         label.font = .systemFont(ofSize: 16, weight: .heavy)
         return label
     }()
+    
+    private lazy var genreLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = Utils.SavedColors.titleAdaptiveColor
+        label.numberOfLines = 1
+        label.font = .systemFont(ofSize: 14, weight: .medium)
+        label.backgroundColor = .red // Para testes
+        return label
+    }()
+    
     
     // TODO: Mudar nome do botão
     private lazy var favoriteButton: UIButton = {
@@ -91,14 +101,23 @@ class MovieDetailCell: UITableViewCell {
         contentView.layoutIfNeeded()
     }
     
-    func configure(movie: PopularMovies, index: IndexPath) {
+    func configure(movie: PopularMoviesModel, index: IndexPath) {
         currentMovie = movie
         print("Overview from API: \(movie.overview)")
         backgroundImageBannerView.image = UIImage(named: movie.posterPath) // Verificar
         titleLabel.text = movie.originalTitle
         overviewLabel.text = movie.overview
         releaseDateLabel.text = movie.releaseDate
-        // Verifica se o filme está nos favoritos e ajusta o ícone do botão
+        
+        let genreNames = movie.genreNames
+        print("Gneres for movies: \(genreNames)")
+        if genreNames.isEmpty {
+            genreLabel.text = "Carregando gêneros..."
+        } else {
+            genreLabel.text = genreNames.joined(separator: ". ")
+        }
+        
+        // Verifica se o filme está nos favoritos e ajusta o ícone do botão na tela de favoritos
         if FavoritesManager.shared.isFavorite(movie) {
             favoriteButton.setImage(starFill, for: .normal)
         } else {
@@ -134,12 +153,12 @@ class MovieDetailCell: UITableViewCell {
     }
     
     // TODO: - A imagem de fundo não está sendo exibida corretamente
-    func configureMoviePoster(with movie: PopularMovies?) {
+    func configureMoviePoster(with movie: PopularMoviesModel?) {
         
         backgroundImageBannerView.image = nil
         guard let movie = movie else { return }
 
-        if let imageURL = movie.posterPathURL { // Substitua pela URL correta
+        if let imageURL = movie.posterPathURL { // Substituir pela URL correta
             print("URL da imagem \(imageURL)")
             backgroundImageBannerView.kf.setImage(
                 with: imageURL,
@@ -155,13 +174,14 @@ class MovieDetailCell: UITableViewCell {
                 }
             )
         } else {
-            print("URL da imagem é nil")
+            print("A URL da imagem é nil")
         }
     }
     
     private func setupViews() {
         contentView.addSubview(backgroundImageBannerView)
         contentView.addSubview(titleLabel)
+        contentView.addSubview(genreLabel)
         contentView.addSubview(overviewLabel)
         contentView.addSubview(favoriteButton)
         contentView.addSubview(releaseDateLabel)
@@ -169,14 +189,21 @@ class MovieDetailCell: UITableViewCell {
         // Define o backgroundImageBannerView para ocupar 60% da altura
         backgroundImageBannerView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
-            //$0.height.equalToSuperview().multipliedBy(0.7)
             $0.height.equalTo(backgroundImageBannerView.snp.width).multipliedBy(1.2)
         }
         
         // Define o titleLabel abaixo da imagem
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(backgroundImageBannerView.snp.bottom).offset(Utils.Padding.small)
-            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.leading.equalToSuperview().inset(16)
+            $0.trailing.equalTo(favoriteButton.snp.leading).inset(-Utils.Padding.small)
+        }
+        
+        // Configuração opcional para o favoriteButton, se quiser que ele apareça junto ao título ou overview
+        favoriteButton.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.top)
+            $0.trailing.equalToSuperview().inset(16)
+            $0.size.equalTo(24) // Define o tamanho do botão
         }
         
         releaseDateLabel.snp.makeConstraints {
@@ -184,18 +211,17 @@ class MovieDetailCell: UITableViewCell {
             $0.leading.equalTo(titleLabel.snp.leading)
         }
         
-        // Define o overviewLabel abaixo do titleLabel
-        overviewLabel.snp.makeConstraints {
+        genreLabel.snp.makeConstraints {
             $0.top.equalTo(releaseDateLabel.snp.bottom).offset(Utils.Padding.medium)
-            $0.leading.trailing.equalToSuperview().inset(16)
-            $0.bottom.equalToSuperview().inset(16) // Ajusta para alinhar o texto na parte de baixo
+            $0.leading.equalToSuperview().inset(16)
+            $0.bottom.equalTo(overviewLabel.snp.top).offset(-Utils.Padding.medium)
         }
         
-        // Configuração opcional para o favoriteButton, se quiser que ele apareça junto ao título ou overview
-        favoriteButton.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.top)
-            $0.trailing.equalToSuperview().inset(16)
-            $0.width.height.equalTo(24) // Define o tamanho do botão
+        // Define o overviewLabel abaixo do titleLabel
+        overviewLabel.snp.makeConstraints {
+            $0.top.equalTo(genreLabel.snp.bottom).offset(Utils.Padding.medium)
+            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.bottom.equalToSuperview().inset(16) // Ajusta para alinhar o texto na parte de baixo
         }
     }
     
@@ -206,7 +232,7 @@ class MovieDetailCell: UITableViewCell {
 
 struct MovieDetailCellRepresentable: UIViewRepresentable {
     func makeUIView(context: Context) -> some UIView {
-        let cell = MovieDetailCell()
+        let cell = PopularMovieDetailCell()
         return cell
     }
 

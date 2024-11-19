@@ -8,13 +8,35 @@
 import Foundation
 
 final class PopularMoviesViewModel: ObservableObject {
-    @Published var movie: [PopularMovies] = []
+    @Published var movie: [PopularMoviesModel] = []
+    @Published var genres: [Genre] = []
     let service = Service()
     private var currentPage = 1
     private var totalPages = 1
     private var isLoading = false
     
-    func loadingPopularMovies() {
+    init() {
+        loadGenres { [weak self] sucess in
+            self?.loadPopularMovies()
+        }
+    }
+    
+    private func loadGenres(completion: @escaping (Bool) -> Void) {
+        service.getGenreForMoviesDetail { [weak self] result in
+            switch result {
+            case .success(let genres):
+                GenreManager.shared.setGenres(genres)
+                print("Sucessfully loaded genres: \(genres.count) genres")
+                self?.genres = genres
+                completion(true)
+            case .failure(let error):
+                print("Failed to load genres: \(error)")
+                completion(false)
+            }
+        }
+    }
+    
+    func loadPopularMovies() {
         
         guard !isLoading else { return }
         isLoading = true

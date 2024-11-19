@@ -35,12 +35,12 @@ class PopularMoviesViewController: UIViewController {
         view.addSubview(collectionView)
         setupConstraints() 
         setupBindings()
-//        viewModel.loadingPopularMovies()
+//        viewModel.loadPopularMovies()
     }
     
     // TODO: - Vrificar se é necessário chamar o loadingPopularMovies() aqui ou no viewDidLoad()
     override func viewWillAppear(_ animated: Bool) {
-        viewModel.loadingPopularMovies()
+        viewModel.loadPopularMovies()
     }
     
     private func setupBindings() {
@@ -59,9 +59,9 @@ class PopularMoviesViewController: UIViewController {
         }
     }
     
-    private func navigateToMovieDetail(movie: PopularMovies) {
+    private func navigateToMovieDetail(movie: PopularMoviesModel) {
         print("Navigating to movie detail for: \(movie.originalTitle)") // Adicione este print
-        let viewController = MovieDetailViewController()
+        let viewController = PopularMovieDetailViewController()
         viewController.movie = movie
         navigationController?.pushViewController(viewController, animated: true)
 
@@ -77,7 +77,7 @@ extension PopularMoviesViewController: UICollectionViewDelegate, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
         let selectedMovie = viewModel.movie[indexPath.row]
-        let detailVC = MovieDetailViewController()
+        let detailVC = PopularMovieDetailViewController()
         detailVC.movie = selectedMovie // Passa o filme selecionado para a tela de detalhes
         navigationController?.pushViewController(detailVC, animated: true)
     }

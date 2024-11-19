@@ -1,5 +1,5 @@
 //
-//  MovieDetailViewController.swift
+//  PopularMovieDetailViewController.swift
 //  MovieMate
 //
 //  Created by Fredson Silva on 22/08/24.
@@ -9,9 +9,9 @@ import UIKit
 import SwiftUI
 import SnapKit
 
-class MovieDetailViewController: UIViewController {
+class PopularMovieDetailViewController: UIViewController {
     
-    var movie: PopularMovies?
+    var movie: PopularMoviesModel?
 
     private lazy var detailTableView: UITableView = {
         let tableView = UITableView()
@@ -20,7 +20,7 @@ class MovieDetailViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         tableView.isUserInteractionEnabled = true
-        tableView.register(MovieDetailCell.self, forCellReuseIdentifier: MovieDetailCell.identifier)
+        tableView.register(PopularMovieDetailCell.self, forCellReuseIdentifier: PopularMovieDetailCell.identifier)
         return tableView
     }()
 
@@ -52,13 +52,13 @@ class MovieDetailViewController: UIViewController {
 
 }
 
-extension MovieDetailViewController: UITableViewDelegate, UITableViewDataSource {
+extension PopularMovieDetailViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return Sections.detail.rawValue
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: MovieDetailCell.identifier, for: indexPath) as? MovieDetailCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: PopularMovieDetailCell.identifier, for: indexPath) as? PopularMovieDetailCell else {
             return UITableViewCell()
         }
         
@@ -72,7 +72,7 @@ extension MovieDetailViewController: UITableViewDelegate, UITableViewDataSource 
     }
 }
 
-extension MovieDetailViewController {
+extension PopularMovieDetailViewController {
     enum Sections: Int, CaseIterable {
         case detail = 1
     }
@@ -83,7 +83,7 @@ extension MovieDetailViewController {
 struct DetailUIViewControllerRepresentable: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIViewController {
         // Substitua isso pelo seu próprio código para criar e configurar sua UIViewController
-        let viewController = MovieDetailViewController()
+        let viewController = PopularMovieDetailViewController()
         return viewController
     }
     

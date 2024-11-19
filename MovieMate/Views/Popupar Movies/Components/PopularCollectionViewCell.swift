@@ -34,7 +34,7 @@ class PopularCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with movie: PopularMovies?) {
+    func configure(with movie: PopularMoviesModel?) {
         guard let movie = movie else {
             coverImageView.image = nil
             return

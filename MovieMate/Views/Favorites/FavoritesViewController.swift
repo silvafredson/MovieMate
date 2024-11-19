@@ -47,7 +47,7 @@ final class FavoritesViewController: UIViewController {
         return tableView
     }()
     
-    private var favorites: [PopularMovies] = [] {
+    private var favorites: [PopularMoviesModel] = [] {
         didSet {
             updateView()
         }

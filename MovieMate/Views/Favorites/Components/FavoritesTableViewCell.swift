@@ -12,7 +12,7 @@ import Kingfisher
 
 final class FavoritesTableViewCell: UITableViewCell {
     
-    var movies: PopularMovies?
+    var movies: PopularMoviesModel?
     
     private let moviesPosterImage = UIImageView()
     private let separatorView = UIView()
@@ -49,7 +49,7 @@ final class FavoritesTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with movie: PopularMovies) {
+    func configure(with movie: PopularMoviesModel) {
         
         if let posterURL = URL(string: "https://image.tmdb.org/t/p/w500\(movie.posterPath)") {
             moviesPosterImage.kf.setImage(with: posterURL)
