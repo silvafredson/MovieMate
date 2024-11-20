@@ -67,6 +67,8 @@ final class FavoritesViewController: UIViewController {
         updateView() // Atualiza a tela de favoritos
     }
     
+    //MARK: - Functions
+    
     private func setupHierarchy() {
         view.addSubview(noFavoritesView)
         view.addSubview(favoriteTableView)
@@ -92,6 +94,27 @@ final class FavoritesViewController: UIViewController {
         }
         favoriteTableView.reloadData()
     }
+    
+    private func removeFavorite(at indexPath: IndexPath) {
+        
+        guard !FavoritesManager.shared.favoriteMovies.isEmpty, indexPath.row < FavoritesManager.shared.favoriteMovies.count else {
+            print("Invalid index or empety favorites")
+            return
+        }
+        
+        let movie = favorites[indexPath.row]
+        FavoritesManager.shared.favoriteMovies.removeAll{ $0.id == movie.id }
+        FavoritesManager.shared.saveFavorites()
+        
+        favorites = FavoritesManager.shared.favoriteMovies
+        
+        // Atualize a tabela na thread principal
+        DispatchQueue.main.async {
+            if self.favoriteTableView.indexPathForSelectedRow != nil {
+                self.favoriteTableView.deleteRows(at: [indexPath], with: .fade)
+            }
+        }
+    }
 }
 
 // MARK: - Extensions
@@ -102,12 +125,22 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: FavoritesTableViewCell.identifier, for: indexPath) as? FavoritesTableViewCell else { return UITableViewCell()}
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: FavoritesTableViewCell.identifier, for: indexPath) as? FavoritesTableViewCell, indexPath.row < favorites.count else { return UITableViewCell()}
         
         // Configura em cada célula os dados dos favoritos
         let movie = favorites[indexPath.row]
         cell.configure(with: movie)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let delete = UIContextualAction(style: .destructive, title: "Delete") { (contextualAction, view, actinoPerformed: (Bool) -> Void) in
+            self.removeFavorite(at: indexPath)
+            actinoPerformed(true)
+            //tableView.reloadData()
+        }
+        delete.image = UIImage(systemName: "trash")
+        return UISwipeActionsConfiguration(actions: [delete])
     }
 }
 

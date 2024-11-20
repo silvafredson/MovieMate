@@ -34,7 +34,7 @@ final class FavoritesManager {
     static var shared = FavoritesManager()
     private init() {}
     
-    public private(set) var favoriteMovies: [PopularMoviesModel] = []
+    public var favoriteMovies: [PopularMoviesModel] = []
     
     func toggleFavorite(for movie: PopularMoviesModel) {
         if let index = favoriteMovies.firstIndex(where: { $0.id == movie.id }) {
@@ -49,7 +49,7 @@ final class FavoritesManager {
         return favoriteMovies.contains(where: { $0.id == movie.id })
     }
 
-    private func saveFavorites() {
+    func saveFavorites() {
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(favoriteMovies) {
             UserDefaults.standard.set(encoded, forKey: "favoriteMovies")
