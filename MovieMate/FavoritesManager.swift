@@ -7,29 +7,6 @@
 
 import Foundation
 
-//class FavoritesManager {
-//    static let shared = FavoritesManager()
-//    private var favoriteMovies: [PopularMoviesModel] = []
-//    
-//    private init() {}
-//
-//    func addMovieToFavorites(_ movie: PopularMoviesModel) {
-//        favoriteMovies.append(movie)
-//    }
-//    
-//    func removeMovieFromFavorites(_ movie: PopularMoviesModel) {
-//        favoriteMovies.removeAll { $0.id == movie.id }
-//    }
-//    
-//    func isFavorite(_ movie: PopularMoviesModel) -> Bool {
-//        return favoriteMovies.contains(where: { $0.id == movie.id })
-//    }
-//    
-//    func getFavorites() -> [PopularMoviesModel] {
-//        return favoriteMovies
-//    }
-//}
-
 final class FavoritesManager {
     static var shared = FavoritesManager()
     private init() {}

@@ -104,7 +104,6 @@ class PopularMovieDetailCell: UITableViewCell {
     func configure(movie: PopularMoviesModel, index: IndexPath) {
         currentMovie = movie
         print("Overview from API: \(movie.overview)")
-        backgroundImageBannerView.image = UIImage(named: movie.posterPath) // Verificar
         titleLabel.text = movie.originalTitle
         overviewLabel.text = movie.overview
         releaseDateLabel.text = movie.releaseDate
@@ -154,20 +153,22 @@ class PopularMovieDetailCell: UITableViewCell {
     
     // TODO: - A imagem de fundo não está sendo exibida corretamente
     func configureMoviePoster(with movie: PopularMoviesModel?) {
-        
         backgroundImageBannerView.image = nil
         guard let movie = movie else { return }
 
-        if let imageURL = movie.posterPathURL { // Substituir pela URL correta
+        if let imageURL = movie.backdropPathURL {
             print("URL da imagem \(imageURL)")
             backgroundImageBannerView.kf.setImage(
                 with: imageURL,
-                placeholder: UIImage(named: "photo.fill"), // Imagem de placeholder enquanto carrega
-                options: [.transition(.fade(0.2))], // Animação de fade ao carregar
+                placeholder: UIImage(systemName: "photo.fill"),
+                options: [
+                    .transition(.fade(0.2)),
+                    .cacheOriginalImage
+                ],
                 completionHandler: { result in
                     switch result {
-                    case .success:
-                        print("Imagem carregada com sucesso.")
+                    case .success(let value):
+                        print("Imagem carregada com sucesso. Tamaho: \(value.image.size)")
                     case .failure(let error):
                         print("Erro ao carregar imagem: \(error)")
                     }
@@ -175,6 +176,7 @@ class PopularMovieDetailCell: UITableViewCell {
             )
         } else {
             print("A URL da imagem é nil")
+            backgroundImageBannerView.image = UIImage(systemName: "photo.fill")
         }
     }
     
@@ -189,7 +191,8 @@ class PopularMovieDetailCell: UITableViewCell {
         // Define o backgroundImageBannerView para ocupar 60% da altura
         backgroundImageBannerView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
-            $0.height.equalTo(backgroundImageBannerView.snp.width).multipliedBy(1.2)
+            $0.height.equalTo(backgroundImageBannerView.snp.width).multipliedBy(1.0)
+            //$0.height.equalTo(backgroundImageBannerView.snp.width).multipliedBy(1.2)
         }
         
         // Define o titleLabel abaixo da imagem

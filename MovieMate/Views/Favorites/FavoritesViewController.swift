@@ -49,7 +49,7 @@ final class FavoritesViewController: UIViewController {
     
     private var favorites: [PopularMoviesModel] = [] {
         didSet {
-            updateView()
+            updateFavoritesView()
         }
     }
     
@@ -64,7 +64,7 @@ final class FavoritesViewController: UIViewController {
         super.viewWillAppear(animated)
         FavoritesManager.shared.loadFavorites()
         favorites = FavoritesManager.shared.favoriteMovies
-        updateView() // Atualiza a tela de favoritos
+        updateFavoritesView() // Atualiza a tela de favoritos
     }
     
     //MARK: - Functions
@@ -84,7 +84,7 @@ final class FavoritesViewController: UIViewController {
         }
     }
     
-    private func updateView() {
+    private func updateFavoritesView() {
         if favorites.isEmpty {
             noFavoritesView.isHidden = false
             favoriteTableView.isHidden = true
@@ -108,7 +108,7 @@ final class FavoritesViewController: UIViewController {
         
         favorites = FavoritesManager.shared.favoriteMovies
         
-        // Atualize a tabela na thread principal
+        // Atualize a tableview na thread principal
         DispatchQueue.main.async {
             if self.favoriteTableView.indexPathForSelectedRow != nil {
                 self.favoriteTableView.deleteRows(at: [indexPath], with: .fade)
@@ -137,7 +137,6 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
         let delete = UIContextualAction(style: .destructive, title: "Delete") { (contextualAction, view, actinoPerformed: (Bool) -> Void) in
             self.removeFavorite(at: indexPath)
             actinoPerformed(true)
-            //tableView.reloadData()
         }
         delete.image = UIImage(systemName: "trash")
         return UISwipeActionsConfiguration(actions: [delete])
@@ -146,26 +145,26 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
 
 // MARK: - SwiftUI Preview
 //
-//struct FavoritesUIViewControllerRepresentable: UIViewControllerRepresentable {
-//    func makeUIViewController(context: Context) -> UIViewController {
-//        // Substitua isso pelo seu próprio código para criar e configurar sua UIViewController
-//        let viewController = FavoritesViewController()
-//        return viewController
-//    }
-//
-//    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
-//}
-//
-//struct FavoritesContentView: View {
-//    var body: some View {
-//        VStack {
-//            FavoritesUIViewControllerRepresentable()
-//                .edgesIgnoringSafeArea(.all)
-//        }
-//    }
-//}
-//
-//// Visualização de visualização prévia
-//#Preview {
-//    FavoritesContentView()
-//}
+struct FavoritesUIViewControllerRepresentable: UIViewControllerRepresentable {
+    func makeUIViewController(context: Context) -> UIViewController {
+        // Substitua isso pelo seu próprio código para criar e configurar sua UIViewController
+        let viewController = FavoritesViewController()
+        return viewController
+    }
+
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
+}
+
+struct FavoritesContentView: View {
+    var body: some View {
+        VStack {
+            FavoritesUIViewControllerRepresentable()
+                .edgesIgnoringSafeArea(.all)
+        }
+    }
+}
+
+// Visualização de visualização prévia
+#Preview {
+    FavoritesContentView()
+}

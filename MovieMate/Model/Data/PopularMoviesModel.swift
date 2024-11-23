@@ -15,6 +15,10 @@ struct PopularMoviesModel: Codable, Identifiable {
     let overview: String
     let posterPath: String
     let releaseDate: String
+    var backdropPathURL: URL? {
+        URL(string: "https://image.tmdb.org/t/p/original\(backdropPath)")
+    }
+    
     var posterPathURL: URL? {
         URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)")
     }
