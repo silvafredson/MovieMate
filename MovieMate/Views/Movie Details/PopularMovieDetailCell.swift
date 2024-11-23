@@ -79,12 +79,19 @@ class PopularMovieDetailCell: UITableViewCell {
         return label
     }()
     
-    // TODO: Estudar melhor isso
     private lazy var customBackgroundView: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 0.5 * 35
         view.backgroundColor = .opaqueSeparator.withAlphaComponent(0.17)
         return view
+    }()
+    
+    private lazy var loadingIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .medium)
+        indicator.hidesWhenStopped = true
+        indicator.color = .systemGray
+        indicator.startAnimating()
+        return indicator
     }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -158,19 +165,24 @@ class PopularMovieDetailCell: UITableViewCell {
 
         if let imageURL = movie.backdropPathURL {
             print("URL da imagem \(imageURL)")
+
             backgroundImageBannerView.kf.setImage(
                 with: imageURL,
-                placeholder: UIImage(systemName: "photo.fill"),
+                placeholder: nil,
                 options: [
                     .transition(.fade(0.2)),
                     .cacheOriginalImage
                 ],
-                completionHandler: { result in
+                completionHandler: { [weak self] result in
+                    
+                    self?.loadingIndicator.stopAnimating()
+                    
                     switch result {
                     case .success(let value):
                         print("Imagem carregada com sucesso. Tamaho: \(value.image.size)")
                     case .failure(let error):
                         print("Erro ao carregar imagem: \(error)")
+                        self?.backgroundImageBannerView.image = UIImage(systemName: "photo.fill")
                     }
                 }
             )
@@ -182,6 +194,7 @@ class PopularMovieDetailCell: UITableViewCell {
     
     private func setupViews() {
         contentView.addSubview(backgroundImageBannerView)
+        contentView.addSubview(loadingIndicator)
         contentView.addSubview(titleLabel)
         contentView.addSubview(genreLabel)
         contentView.addSubview(overviewLabel)
@@ -225,6 +238,10 @@ class PopularMovieDetailCell: UITableViewCell {
             $0.top.equalTo(genreLabel.snp.bottom).offset(Utils.Padding.medium)
             $0.leading.trailing.equalToSuperview().inset(16)
             $0.bottom.equalToSuperview().inset(16) // Ajusta para alinhar o texto na parte de baixo
+        }
+        
+        loadingIndicator.snp.makeConstraints {
+            $0.center.equalTo(backgroundImageBannerView.snp.center)
         }
     }
     
