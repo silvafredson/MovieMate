@@ -48,7 +48,6 @@ class PopularMovieDetailCell: UITableViewCell {
         return label
     }()
     
-    
     // TODO: Mudar nome do botão
     private lazy var favoriteButton: UIButton = {
         let button = UIButton()
@@ -132,18 +131,8 @@ class PopularMovieDetailCell: UITableViewCell {
     }
     
     // MARK: - Private functions
-    private func favoriteButtonState() {
-        if favoriteButton.currentImage == starFill {
-            favoriteButton.setImage(star, for: .normal)
-            delegate?.favoriteMovie(favorite: false)
-        } else {
-            favoriteButton.setImage(starFill, for: .normal)
-            delegate?.favoriteMovie(favorite: true)
-        }
-    }
     
     private func favoriteButtonPressed() {
-        favoriteButtonState()
         
         guard let movie = currentMovie else { return }
         
@@ -201,25 +190,21 @@ class PopularMovieDetailCell: UITableViewCell {
         contentView.addSubview(favoriteButton)
         contentView.addSubview(releaseDateLabel)
         
-        // Define o backgroundImageBannerView para ocupar 60% da altura
         backgroundImageBannerView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
             $0.height.equalTo(backgroundImageBannerView.snp.width).multipliedBy(1.0)
-            //$0.height.equalTo(backgroundImageBannerView.snp.width).multipliedBy(1.2)
         }
         
-        // Define o titleLabel abaixo da imagem
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(backgroundImageBannerView.snp.bottom).offset(Utils.Padding.small)
             $0.leading.equalToSuperview().inset(16)
             $0.trailing.equalTo(favoriteButton.snp.leading).inset(-Utils.Padding.small)
         }
         
-        // Configuração opcional para o favoriteButton, se quiser que ele apareça junto ao título ou overview
         favoriteButton.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.top)
             $0.trailing.equalToSuperview().inset(16)
-            $0.size.equalTo(24) // Define o tamanho do botão
+            $0.size.equalTo(24)
         }
         
         releaseDateLabel.snp.makeConstraints {
@@ -233,11 +218,10 @@ class PopularMovieDetailCell: UITableViewCell {
             $0.bottom.equalTo(overviewLabel.snp.top).offset(-Utils.Padding.medium)
         }
         
-        // Define o overviewLabel abaixo do titleLabel
         overviewLabel.snp.makeConstraints {
             $0.top.equalTo(genreLabel.snp.bottom).offset(Utils.Padding.medium)
             $0.leading.trailing.equalToSuperview().inset(16)
-            $0.bottom.equalToSuperview().inset(16) // Ajusta para alinhar o texto na parte de baixo
+            $0.bottom.equalToSuperview().inset(16)
         }
         
         loadingIndicator.snp.makeConstraints {

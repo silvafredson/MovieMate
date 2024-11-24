@@ -177,6 +177,14 @@
 			path = Shared;
 			sourceTree = "<group>";
 		};
+		6550FB682CF37BE4005FF155 /* Componentes */ = {
+			isa = PBXGroup;
+			children = (
+				65D1FE5F2C7835AA00A1EAFD /* PopularMovieDetailCell.swift */,
+			);
+			path = Componentes;
+			sourceTree = "<group>";
+		};
 		657FAF4A2C434AAF00E24F53 /* PopularMovies */ = {
 			isa = PBXGroup;
 			children = (
@@ -241,7 +249,7 @@
 			isa = PBXGroup;
 			children = (
 				65D1FE5D2C781B7200A1EAFD /* PopularMovieDetailViewController.swift */,
-				65D1FE5F2C7835AA00A1EAFD /* PopularMovieDetailCell.swift */,
+				6550FB682CF37BE4005FF155 /* Componentes */,
 			);
 			path = "Popular MovieDetails";
 			sourceTree = "<group>";

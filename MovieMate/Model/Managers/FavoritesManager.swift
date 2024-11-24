@@ -9,7 +9,9 @@ import Foundation
 
 final class FavoritesManager {
     static var shared = FavoritesManager()
-    private init() {}
+    private init() {
+        loadFavorites()
+    }
     
     public var favoriteMovies: [PopularMoviesModel] = []
     
