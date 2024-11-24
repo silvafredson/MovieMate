@@ -24,7 +24,6 @@ class PopularMoviesViewController: UIViewController {
         collectionView.contentInset = UIEdgeInsets(top: .zero, left: 8, bottom: .zero, right: 8)
         collectionView.dataSource = self
         collectionView.delegate = self
-        //collectionView.safeAreaInsets
         collectionView.register(PopularCollectionViewCell.self, forCellWithReuseIdentifier: PopularCollectionViewCell.identifier)
         collectionView.isUserInteractionEnabled = true
         return collectionView
@@ -35,7 +34,6 @@ class PopularMoviesViewController: UIViewController {
         view.addSubview(collectionView)
         setupConstraints() 
         setupBindings()
-//        viewModel.loadPopularMovies()
     }
     
     // TODO: - Vrificar se é necessário chamar o loadingPopularMovies() aqui ou no viewDidLoad()
@@ -64,9 +62,7 @@ class PopularMoviesViewController: UIViewController {
         let viewController = PopularMovieDetailViewController()
         viewController.movie = movie
         navigationController?.pushViewController(viewController, animated: true)
-
     }
-
 }
 
 extension PopularMoviesViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -101,7 +97,6 @@ extension PopularMoviesViewController: UICollectionViewDelegate, UICollectionVie
 extension PopularMoviesViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let size = (self.view.frame.width / 3) - 12
-        //size = (self.view.frame.height / 3) - 90
         return CGSize(width: size, height: 180)
     }
     
@@ -109,8 +104,6 @@ extension PopularMoviesViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 8
     }
-
-    
 }
 
 extension PopularMoviesViewController: UIScrollViewDelegate {

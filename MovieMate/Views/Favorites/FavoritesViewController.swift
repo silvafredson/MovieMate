@@ -108,7 +108,7 @@ final class FavoritesViewController: UIViewController {
         
         favorites = FavoritesManager.shared.favoriteMovies
         
-        // Atualize a tableview na thread principal
+        // Atualiza a tabela na thread principal
         DispatchQueue.main.async {
             if self.favoriteTableView.indexPathForSelectedRow != nil {
                 self.favoriteTableView.deleteRows(at: [indexPath], with: .fade)

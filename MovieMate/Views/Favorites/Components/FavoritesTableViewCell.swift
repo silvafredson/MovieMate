@@ -50,14 +50,10 @@ final class FavoritesTableViewCell: UITableViewCell {
     }
     
     func configure(with movie: PopularMoviesModel) {
-        
         if let posterURL = URL(string: "https://image.tmdb.org/t/p/w500\(movie.posterPath)") {
             moviesPosterImage.kf.setImage(with: posterURL)
         }
-        
-        //moviesPosterImage.image = UIImage(named: movie.posterPath)
         titleLabel.text = movie.originalTitle
-        //genrelabel.text = movie.
         releaseDateLabel.text = movie.releaseDate
     }
     
@@ -81,22 +77,21 @@ final class FavoritesTableViewCell: UITableViewCell {
         }
         
         titleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(Utils.Padding.smaller)
-            $0.leading.equalTo(moviesPosterImage.snp.trailing).offset(Utils.Padding.big)
+            $0.top.equalTo(moviesPosterImage.snp.top).inset(Utils.Padding.smaller)
+            $0.leading.equalTo(moviesPosterImage.snp.trailing).offset(Utils.Padding.smaller)
             $0.trailing.equalToSuperview().inset(Utils.Padding.medium)
         }
         
         genrelabel.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(Utils.Padding.smaller)
-            $0.leading.equalTo(moviesPosterImage.snp.trailing).offset(Utils.Padding.big)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(Utils.Padding.medium)
+            $0.leading.equalTo(moviesPosterImage.snp.trailing).offset(Utils.Padding.smaller)
             $0.trailing.equalToSuperview().inset(Utils.Padding.medium)
         }
         
         releaseDateLabel.snp.makeConstraints {
-            $0.top.equalTo(genrelabel.snp.bottom).offset(Utils.Padding.smaller)
-            $0.leading.equalTo(moviesPosterImage.snp.trailing).offset(Utils.Padding.big)
+            $0.leading.equalTo(moviesPosterImage.snp.trailing).offset(Utils.Padding.smaller)
             $0.trailing.equalToSuperview().inset(Utils.Padding.medium)
-            $0.bottom.equalToSuperview().inset(Utils.Padding.smaller)
+            $0.bottom.equalTo(moviesPosterImage.snp.bottom).inset(Utils.Padding.smaller)
         }
         
         separatorView.snp.makeConstraints {
