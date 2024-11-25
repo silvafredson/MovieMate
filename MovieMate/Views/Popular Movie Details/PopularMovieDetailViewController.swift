@@ -31,17 +31,17 @@ class PopularMovieDetailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //setupNavigationBar()
+        setupNavigationBar()
         detailTableView.reloadData()
     }
     
-//    private func setupNavigationBar() {
-//        // Configura a barra de navegação como transparente
-//        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-//        navigationController?.navigationBar.shadowImage = UIImage()
-//        navigationController?.navigationBar.isTranslucent = true
-//        navigationController?.navigationBar.backgroundColor = .clear // Adiciona um fundo claro
-//    }
+    private func setupNavigationBar() {
+        // Configura a barra de navegação como transparente
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.backgroundColor = .clear // Adiciona um fundo claro
+    }
   
     private func setupView() {
         view.addSubview(detailTableView)

@@ -67,22 +67,6 @@ class PopularMoviesViewController: UIViewController {
     }
 }
 
-extension PopularMoviesViewController: UISearchResultsUpdating {
-    func updateSearchResults(for searchController: UISearchController) {
-        print("DEBUG PRINT:", searchController.searchBar.text)
-    }
-    
-    func setuppSerchController() {
-        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.hidesNavigationBarDuringPresentation = false
-        searchController.searchBar.placeholder = "Search for a movie"
-        navigationItem.searchController = searchController
-        definesPresentationContext = true // TODO:
-        navigationItem.hidesSearchBarWhenScrolling = false
-    }
-}
-
 extension PopularMoviesViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.movie.count
@@ -134,6 +118,22 @@ extension PopularMoviesViewController: UIScrollViewDelegate {
         if offsetY > currentHeight - height {
             viewModel.loadMorePopularMovies()
         }
+    }
+}
+
+extension PopularMoviesViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        print("DEBUG PRINT:", searchController.searchBar.text)
+    }
+    
+    func setuppSerchController() {
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchBar.placeholder = "Search for a movie"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true // TODO:
+        navigationItem.hidesSearchBarWhenScrolling = false
     }
 }
 

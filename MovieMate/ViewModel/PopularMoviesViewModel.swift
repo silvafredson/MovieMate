@@ -37,7 +37,6 @@ final class PopularMoviesViewModel: ObservableObject {
     }
     
     func loadPopularMovies() {
-        
         guard !isLoading else { return }
         isLoading = true
         

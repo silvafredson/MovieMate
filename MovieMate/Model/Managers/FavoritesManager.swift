@@ -9,12 +9,12 @@ import Foundation
 
 final class FavoritesManager {
     static var shared = FavoritesManager()
+    public var favoriteMovies: [PopularMoviesModel] = []
+    
     private init() {
         loadFavorites()
     }
-    
-    public var favoriteMovies: [PopularMoviesModel] = []
-    
+
     func toggleFavorite(for movie: PopularMoviesModel) {
         if let index = favoriteMovies.firstIndex(where: { $0.id == movie.id }) {
             favoriteMovies.remove(at: index) // Remove dos favoritos
