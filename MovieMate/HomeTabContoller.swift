@@ -14,6 +14,7 @@ final class HomeTabContoller: UITabBarController {
         super.viewDidLoad()
         setupTabs()
         customizeTabBar()
+        configureNavigationBarAppearance()
     }
     
     // MARK: - Setup Tabs
@@ -24,10 +25,14 @@ final class HomeTabContoller: UITabBarController {
     }
     
     private func createNav(with title: String, and image: UIImage?, vc: UIViewController) -> UINavigationController {
+        //vc.additionalSafeAreaInsets = .zero
+        //vc.automaticallyAdjustsScrollViewInsets = false
+        
         let nav = UINavigationController(rootViewController: vc)
+        nav.navigationBar.prefersLargeTitles = false
         nav.tabBarItem.title = title
         nav.tabBarItem.image = image
-        nav.viewControllers.first?.navigationItem.title = title
+        //nav.viewControllers.first?.navigationItem.title = title
         return nav
     }
     
@@ -36,26 +41,20 @@ final class HomeTabContoller: UITabBarController {
         self.tabBar.unselectedItemTintColor = .gray
         self.tabBar.backgroundColor = .systemBackground
     }
+    
+    private func configureNavigationBarAppearance() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .systemBackground
+        appearance.titleTextAttributes = [
+            .foregroundColor: Utils.SavedColors.titleAdaptiveColor ?? .black,
+            .font: UIFont.systemFont(ofSize: 20, weight: .semibold)
+        ]
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+    }
 }
 
-// TODO: - Resolver o probblema do espaçamento na navigation (visivel apenas no simulador)
-//extension UINavigationController {
-//    override open func viewDidLoad() {
-//        super.viewDidLoad()
-//        
-//        let appearance = UINavigationBarAppearance()
-//        //appearance.configureWithOpaqueBackground()
-//        //appearance.backgroundColor = UIColor(Utils.SavedColors.titleAdaptiveColor)
-//        appearance.titleTextAttributes = [
-//            .foregroundColor: Utils.SavedColors.titleAdaptiveColor ?? "",
-//            .font: UIFont.systemFont(ofSize: 20, weight: .semibold)
-//        ]
-//        //appearance.shadowColor = .yellow
-//        
-//        UINavigationBar.appearance().standardAppearance = appearance
-//        //UINavigationBar.appearance().scrollEdgeAppearance = appearance
-//    }
-//}
 
 // MARK: - SwiftUI Preview
 
