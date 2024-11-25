@@ -14,6 +14,7 @@ class PopularMoviesViewController: UIViewController {
     
     private var viewModel = PopularMoviesViewModel()
     private var cancellables = Set<AnyCancellable>()
+    private let searchController = UISearchController(searchResultsController: nil)
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -34,6 +35,7 @@ class PopularMoviesViewController: UIViewController {
         view.addSubview(collectionView)
         setupConstraints() 
         setupBindings()
+        setuppSerchController()
     }
     
     // TODO: - Vrificar se é necessário chamar o loadingPopularMovies() aqui ou no viewDidLoad()
@@ -62,6 +64,22 @@ class PopularMoviesViewController: UIViewController {
         let viewController = PopularMovieDetailViewController()
         viewController.movie = movie
         navigationController?.pushViewController(viewController, animated: true)
+    }
+}
+
+extension PopularMoviesViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        print("DEBUG PRINT:", searchController.searchBar.text)
+    }
+    
+    func setuppSerchController() {
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchBar.placeholder = "Search for a movie"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true // TODO:
+        navigationItem.hidesSearchBarWhenScrolling = false
     }
 }
 
