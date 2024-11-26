@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 final class PopularMoviesViewModel: ObservableObject {
     @Published var movie: [PopularMoviesModel] = []
@@ -14,6 +15,8 @@ final class PopularMoviesViewModel: ObservableObject {
     private var currentPage = 1
     private var totalPages = 1
     private var isLoading = false
+    
+    private(set) var filteredMovies: [PopularMoviesModel] = []
     
     init() {
         loadGenres { [weak self] sucess in
@@ -72,5 +75,24 @@ final class PopularMoviesViewModel: ObservableObject {
                 print("Failed to load movies: \(error)")
             }
         }
+    }
+}
+
+extension PopularMoviesViewModel {
+    public func inSearchMode(_ searchController: UISearchController) -> Bool {
+        let isActive = searchController.isActive
+        let searchText = searchController.searchBar.text ?? ""
+        
+        return isActive && !searchText.isEmpty
+    }
+    
+    public func updateSearchController(searchBarText: String?) {
+        self.filteredMovies = movie
+        
+        if let searchText = searchBarText?.lowercased() {
+            guard !searchText.isEmpty else { self.loadPopularMovies(); return } // Verificar se o método correto a se usar aqui é esse mesmo
+            self.filteredMovies = self.filteredMovies.filter({ $0.originalTitle.lowercased().contains(searchText) })
+        }
+        self.loadPopularMovies()
     }
 }

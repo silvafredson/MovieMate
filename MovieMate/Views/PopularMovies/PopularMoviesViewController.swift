@@ -69,11 +69,16 @@ class PopularMoviesViewController: UIViewController {
 
 extension PopularMoviesViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.movie.count
+        let inSearchMode = self.viewModel.inSearchMode(searchController)
+        return inSearchMode ? self.viewModel.filteredMovies.count : self.viewModel.movie.count
+        //return viewModel.movie.count
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
+        let inSearchMode = self.viewModel.inSearchMode(searchController)
+        let movie = inSearchMode ? self.viewModel.filteredMovies[indexPath.row] : self.viewModel.movie[indexPath.row]
+        
         let selectedMovie = viewModel.movie[indexPath.row]
         let detailVC = PopularMovieDetailViewController()
         detailVC.movie = selectedMovie // Passa o filme selecionado para a tela de detalhes
@@ -84,7 +89,8 @@ extension PopularMoviesViewController: UICollectionViewDelegate, UICollectionVie
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PopularCollectionViewCell.identifier, for: indexPath) as? PopularCollectionViewCell else {
             return UICollectionViewCell()
         }
-        let movie = viewModel.movie[indexPath.row]
+        let inSearchMode = self.viewModel.inSearchMode(searchController)
+        let movie = inSearchMode ? self.viewModel.filteredMovies[indexPath.row] : self.viewModel.movie[indexPath.row]
         print("Configuring cell with movie: \(movie.originalTitle)")
         cell.configure(with: movie)
         
@@ -123,7 +129,7 @@ extension PopularMoviesViewController: UIScrollViewDelegate {
 
 extension PopularMoviesViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        print("DEBUG PRINT:", searchController.searchBar.text)
+        self.viewModel.updateSearchController(searchBarText: searchController.searchBar.text)
     }
     
     func setuppSerchController() {
